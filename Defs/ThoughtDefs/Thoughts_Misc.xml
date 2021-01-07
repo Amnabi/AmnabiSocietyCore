@@ -1,0 +1,335 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThoughtDef>
+    <defName>CoverGood</defName>
+    <workerClass>Amnabi.ThoughtWorker_SelfCoverGood</workerClass>
+    <validWhileDespawned>false</validWhileDespawned>
+    <stages>
+      <li>
+        <label>covering my {0}</label>
+        <description>ERROR</description>
+        <baseMoodEffect>1</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  
+  <ThoughtDef>
+    <defName>CoverBad</defName>
+    <workerClass>Amnabi.ThoughtWorker_SelfCoverBad</workerClass>
+    <validWhileDespawned>false</validWhileDespawned>
+    <stages>
+      <li>
+        <label>covering my {0}</label>
+        <description>ERROR</description>
+        <baseMoodEffect>-1</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  
+  <ThoughtDef>
+    <defName>RevealGood</defName>
+    <workerClass>Amnabi.ThoughtWorker_SelfRevealGood</workerClass>
+    <validWhileDespawned>false</validWhileDespawned>
+    <stages>
+      <li>
+        <label>revealing my {0}</label>
+        <description>ERROR</description>
+        <baseMoodEffect>1</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  
+  <ThoughtDef>
+    <defName>RevealBad</defName>
+    <workerClass>Amnabi.ThoughtWorker_SelfRevealBad</workerClass>
+    <validWhileDespawned>false</validWhileDespawned>
+    <stages>
+      <li>
+        <label>revealing my {0}</label>
+        <description>ERROR</description>
+        <baseMoodEffect>-1</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  
+  <ThoughtDef>
+    <defName>SelfWearingRightClothing</defName>
+    <workerClass>Amnabi.ThoughtWorker_SelfWearingEncouragedApparel</workerClass>
+    <validWhileDespawned>false</validWhileDespawned>
+    <stages>
+      <li>
+        <label>{0} clothes</label>
+        <description>My clothes are XX.</description>
+        <baseMoodEffect>1</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  
+  <ThoughtDef>
+    <defName>SelfWearingWrongClothing</defName>
+    <workerClass>Amnabi.ThoughtWorker_SelfWearingDiscouragedApparel</workerClass>
+    <validWhileDespawned>false</validWhileDespawned>
+    <stages>
+      <li>
+        <label>{0} clothes</label>
+        <description>My clothes are XX.</description>
+        <baseMoodEffect>1</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  
+  
+  <ThoughtDef>
+    <defName>AteTastyFood</defName>
+    <showBubble>true</showBubble>
+    <icon>UI/IdentityIcons/Food</icon>
+    <durationDays>1</durationDays>
+    <stages>
+      <li>
+        <label>ate tasty food</label>
+        <description>I ate tasty food.</description>
+        <baseMoodEffect>10</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>AteHealthyFood</defName>
+    <showBubble>true</showBubble>
+    <icon>UI/IdentityIcons/Food</icon>
+    <durationDays>1</durationDays>
+    <stages>
+      <li>
+        <label>ate healthy food</label>
+        <description>I ate healthy food.</description>
+        <baseMoodEffect>4</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>AteTraditionalFood</defName>
+    <showBubble>true</showBubble>
+    <icon>UI/IdentityIcons/Food</icon>
+    <durationDays>1</durationDays>
+    <stages>
+      <li>
+        <label>ate traditional food</label>
+        <description>I ate traditional food.</description>
+        <baseMoodEffect>5</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  
+  
+  <ThoughtDef>
+    <defName>AteBarbaricFood</defName>
+    <showBubble>true</showBubble>
+    <icon>UI/IdentityIcons/FoodBarbaric</icon>
+    <durationDays>1</durationDays>
+    <stages>
+      <li>
+        <label>ate barbaric food</label>
+        <description>I ate barbaric food.</description>
+        <baseMoodEffect>-15</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>AteDangerousFood</defName>
+    <showBubble>true</showBubble>
+    <icon>UI/IdentityIcons/FoodDangerous</icon>
+    <durationDays>1</durationDays>
+    <stages>
+      <li>
+        <label>ate dangerous food</label>
+        <description>I ate dangerous food.</description>
+        <baseMoodEffect>-15</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>AteDirtyFood</defName>
+    <showBubble>true</showBubble>
+    <icon>UI/IdentityIcons/FoodDirty</icon>
+    <durationDays>1</durationDays>
+    <stages>
+      <li>
+        <label>ate dirty food</label>
+        <description>I ate dirty food. I feel sick.</description>
+        <baseMoodEffect>-15</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>AteDisgustingFood</defName>
+    <showBubble>true</showBubble>
+    <icon>UI/IdentityIcons/FoodDisgusting</icon>
+    <durationDays>1</durationDays>
+    <stages>
+      <li>
+        <label>ate disgusting food</label>
+        <description>I ate disgusting food. I feel sick.</description>
+        <baseMoodEffect>-15</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>AteHolyFood</defName>
+    <showBubble>true</showBubble>
+    <icon>UI/IdentityIcons/FoodHoly</icon>
+    <durationDays>1</durationDays>
+    <stages>
+      <li>
+        <label>ate sacred food</label>
+        <description>I ate sacred food. This is blasphemy!</description>
+        <baseMoodEffect>-15</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>AteImmoralFood</defName>
+    <showBubble>true</showBubble>
+    <icon>UI/IdentityIcons/FoodImmoral</icon>
+    <durationDays>1</durationDays>
+    <stages>
+      <li>
+        <label>ate immoral food</label>
+        <description>I ate immoral food. I feel guilty.</description>
+        <baseMoodEffect>-15</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>AteUnholyFood</defName>
+    <showBubble>true</showBubble>
+    <icon>UI/IdentityIcons/FoodUnholy</icon>
+    <durationDays>1</durationDays>
+    <stages>
+      <li>
+        <label>ate cursed food</label>
+        <description>I ate cursed food. I feel horrible.</description>
+        <baseMoodEffect>-15</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  
+  <ThoughtDef>
+    <defName>CulturalExchangeFail</defName>
+    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <durationDays>10</durationDays>
+    <stackLimit>300</stackLimit>
+    <stackLimitForSameOtherPawn>5</stackLimitForSameOtherPawn>
+    <stackedEffectMultiplier>0.9</stackedEffectMultiplier>
+    <stages>
+      <li>
+        <label>cultural disagreement</label>
+        <baseOpinionOffset>-2</baseOpinionOffset>
+      </li>
+    </stages>
+    <thoughtToMake>CulturalExchangeFailMood</thoughtToMake>
+  </ThoughtDef>
+  
+  <ThoughtDef>
+    <defName>CulturalExchangeFailMood</defName>
+    <durationDays>3.0</durationDays>
+    <stackLimit>5</stackLimit>
+    <stackedEffectMultiplier>0.9</stackedEffectMultiplier>
+    <stages>
+      <li>
+        <label>cultural disagreement</label>
+        <description>We had a fight about culture.</description>
+        <baseMoodEffect>-1</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  
+  <ThoughtDef>
+    <defName>FaithExchangeFail</defName>
+    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <durationDays>10</durationDays>
+    <stackLimit>300</stackLimit>
+    <stackLimitForSameOtherPawn>5</stackLimitForSameOtherPawn>
+    <stackedEffectMultiplier>0.9</stackedEffectMultiplier>
+    <stages>
+      <li>
+        <label>spiritual disagreement</label>
+        <baseOpinionOffset>-2</baseOpinionOffset>
+      </li>
+    </stages>
+    <thoughtToMake>FaithExchangeFailMood</thoughtToMake>
+  </ThoughtDef>
+  
+  <ThoughtDef>
+    <defName>FaithExchangeFailMood</defName>
+    <durationDays>3.0</durationDays>
+    <stackLimit>5</stackLimit>
+    <stackedEffectMultiplier>0.9</stackedEffectMultiplier>
+    <stages>
+      <li>
+        <label>spiritual disagreement</label>
+        <description>We had a fight about faith.</description>
+        <baseMoodEffect>-1</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  
+  <ThoughtDef>
+    <defName>IdeologyExchangeFail</defName>
+    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <durationDays>10</durationDays>
+    <stackLimit>300</stackLimit>
+    <stackLimitForSameOtherPawn>5</stackLimitForSameOtherPawn>
+    <stackedEffectMultiplier>0.9</stackedEffectMultiplier>
+    <stages>
+      <li>
+        <label>ideological disagreement</label>
+        <baseOpinionOffset>-2</baseOpinionOffset>
+      </li>
+    </stages>
+    <thoughtToMake>IdeologyExchangeFailMood</thoughtToMake>
+  </ThoughtDef>
+  
+  <ThoughtDef>
+    <defName>IdeologyExchangeFailMood</defName>
+    <durationDays>3.0</durationDays>
+    <stackLimit>5</stackLimit>
+    <stackedEffectMultiplier>0.9</stackedEffectMultiplier>
+    <stages>
+      <li>
+        <label>ideological disagreement</label>
+        <description>We had a fight about ideology.</description>
+        <baseMoodEffect>-1</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  
+  <ThoughtDef>
+    <defName>OpinionExchangeFail</defName>
+    <thoughtClass>Thought_MemorySocial</thoughtClass>
+    <durationDays>10</durationDays>
+    <stackLimit>300</stackLimit>
+    <stackLimitForSameOtherPawn>5</stackLimitForSameOtherPawn>
+    <stackedEffectMultiplier>0.9</stackedEffectMultiplier>
+    <stages>
+      <li>
+        <label>opinion disagreement</label>
+        <baseOpinionOffset>-2</baseOpinionOffset>
+      </li>
+    </stages>
+    <thoughtToMake>OpinionExchangeFailMood</thoughtToMake>
+  </ThoughtDef>
+  
+  <ThoughtDef>
+    <defName>OpinionExchangeFailMood</defName>
+    <durationDays>3.0</durationDays>
+    <stackLimit>5</stackLimit>
+    <stackedEffectMultiplier>0.9</stackedEffectMultiplier>
+    <stages>
+      <li>
+        <label>opinion disagreement</label>
+        <description>We had a fight about our opinions.</description>
+        <baseMoodEffect>-1</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+  
+</Defs>

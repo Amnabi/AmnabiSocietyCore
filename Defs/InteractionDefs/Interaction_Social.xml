@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <InteractionDef>
+    <defName>FormNewCulture</defName>
+    <label>form new culture</label>
+    <workerClass>Amnabi.InteractionWorker_FormNewIdentity</workerClass>
+    <symbol>UI/IdeaIcons/CultureIdentity</symbol>
+    <initiatorXpGainSkill>Social</initiatorXpGainSkill>
+    <initiatorXpGainAmount>10</initiatorXpGainAmount>
+    <logRulesInitiator>
+      <rulesStrings>
+        <li>r_logentry->[INITIATOR_nameDef] and [RECIPIENT_nameDef] [talkedabout] [subject].</li>
+        <li>r_logentry->[INITIATOR_nameDef] [talkedabout] [subject] with [RECIPIENT_nameDef].</li>
+
+        <li>talkedabout->communicated thoughts about</li>
+        <li>talkedabout->exchanged thoughts about</li>
+        <li>talkedabout->exchanged ideas about</li>
+        <li>talkedabout->shared views on</li>
+        <li>talkedabout->shared beliefs on</li>
+        <li>talkedabout->discussed the topic of</li>
+        <li>talkedabout->had a heartfelt conversation about</li>
+        <li>talkedabout->talked quietly about</li>
+        <li>talkedabout->talked deeply about</li>
+        <li>talkedabout->connected on the topic of</li>
+
+        <li>subject->forming a new culture</li>
+      </rulesStrings>
+    </logRulesInitiator>
+  </InteractionDef>
+
+  <InteractionDef>
+    <defName>CulturalTalk</defName>
+    <label>cultural talk</label>
+    <workerClass>Amnabi.InteractionWorker_CulturalExchange</workerClass>
+    <symbol>UI/IdeaIcons/CultureIdentity</symbol>
+    <initiatorXpGainSkill>Social</initiatorXpGainSkill>
+    <initiatorXpGainAmount>10</initiatorXpGainAmount>
+    <logRulesInitiator>
+      <rulesStrings>
+        <li>r_logentry->[INITIATOR_nameDef] and [RECIPIENT_nameDef] [talkedabout] [subject].</li>
+        <li>r_logentry->[INITIATOR_nameDef] [talkedabout] [subject] with [RECIPIENT_nameDef].</li>
+
+        <li>talkedabout->communicated thoughts about</li>
+        <li>talkedabout->exchanged thoughts about</li>
+        <li>talkedabout->exchanged ideas about</li>
+        <li>talkedabout->shared views on</li>
+        <li>talkedabout->shared beliefs on</li>
+        <li>talkedabout->discussed the topic of</li>
+        <li>talkedabout->had a heartfelt conversation about</li>
+        <li>talkedabout->talked quietly about</li>
+        <li>talkedabout->talked deeply about</li>
+        <li>talkedabout->connected on the topic of</li>
+
+        <li>subject->their culture</li>
+      </rulesStrings>
+    </logRulesInitiator>
+  </InteractionDef>
+  
+  <InteractionDef>
+    <defName>FaithTalk</defName>
+    <label>faith talk</label>
+    <workerClass>Amnabi.InteractionWorker_FaithExchange</workerClass>
+    <symbol>UI/IdeaIcons/SpiritualIdentity</symbol>
+    <initiatorXpGainSkill>Social</initiatorXpGainSkill>
+    <initiatorXpGainAmount>10</initiatorXpGainAmount>
+    <logRulesInitiator>
+      <rulesStrings>
+        <li>r_logentry->[INITIATOR_nameDef] and [RECIPIENT_nameDef] [talkedabout] [subject].</li>
+        <li>r_logentry->[INITIATOR_nameDef] [talkedabout] [subject] with [RECIPIENT_nameDef].</li>
+
+        <li>talkedabout->communicated thoughts about</li>
+        <li>talkedabout->exchanged thoughts about</li>
+        <li>talkedabout->exchanged ideas about</li>
+        <li>talkedabout->shared views on</li>
+        <li>talkedabout->shared beliefs on</li>
+        <li>talkedabout->discussed the topic of</li>
+        <li>talkedabout->had a heartfelt conversation about</li>
+        <li>talkedabout->talked quietly about</li>
+        <li>talkedabout->talked deeply about</li>
+        <li>talkedabout->connected on the topic of</li>
+
+        <li>subject->their faith</li>
+      </rulesStrings>
+    </logRulesInitiator>
+  </InteractionDef>
+  
+  <InteractionDef>
+    <defName>IdeologyTalk</defName>
+    <label>ideological talk</label>
+    <workerClass>Amnabi.InteractionWorker_IdeologyExchange</workerClass>
+    <symbol>UI/IdeaIcons/IdeologyIdentity</symbol>
+    <initiatorXpGainSkill>Social</initiatorXpGainSkill>
+    <initiatorXpGainAmount>10</initiatorXpGainAmount>
+    <logRulesInitiator>
+      <rulesStrings>
+        <li>r_logentry->[INITIATOR_nameDef] and [RECIPIENT_nameDef] [talkedabout] [subject].</li>
+        <li>r_logentry->[INITIATOR_nameDef] [talkedabout] [subject] with [RECIPIENT_nameDef].</li>
+
+        <li>talkedabout->communicated thoughts about</li>
+        <li>talkedabout->exchanged thoughts about</li>
+        <li>talkedabout->exchanged ideas about</li>
+        <li>talkedabout->shared views on</li>
+        <li>talkedabout->shared beliefs on</li>
+        <li>talkedabout->discussed the topic of</li>
+        <li>talkedabout->had a heartfelt conversation about</li>
+        <li>talkedabout->talked quietly about</li>
+        <li>talkedabout->talked deeply about</li>
+        <li>talkedabout->connected on the topic of</li>
+
+        <li>subject->their ideology</li>
+      </rulesStrings>
+    </logRulesInitiator>
+  </InteractionDef>
+  
+  <InteractionDef>
+    <defName>OpinionTalk</defName>
+    <label>opinion talk</label>
+    <workerClass>Amnabi.InteractionWorker_OpinionExchange</workerClass>
+    <symbol>Things/Mote/SpeechSymbols/DeepTalk</symbol>
+    <initiatorXpGainSkill>Social</initiatorXpGainSkill>
+    <initiatorXpGainAmount>10</initiatorXpGainAmount>
+    <logRulesInitiator>
+      <rulesStrings>
+        <li>r_logentry->[INITIATOR_nameDef] and [RECIPIENT_nameDef] [talkedabout] [subject].</li>
+        <li>r_logentry->[INITIATOR_nameDef] [talkedabout] [subject] with [RECIPIENT_nameDef].</li>
+
+        <li>talkedabout->communicated thoughts about</li>
+        <li>talkedabout->exchanged thoughts about</li>
+        <li>talkedabout->exchanged ideas about</li>
+        <li>talkedabout->shared views on</li>
+        <li>talkedabout->shared beliefs on</li>
+        <li>talkedabout->discussed the topic of</li>
+        <li>talkedabout->had a heartfelt conversation about</li>
+        <li>talkedabout->talked quietly about</li>
+        <li>talkedabout->talked deeply about</li>
+        <li>talkedabout->connected on the topic of</li>
+
+        <li>subject->their opinion</li>
+      </rulesStrings>
+    </logRulesInitiator>
+  </InteractionDef>
+  
+  <RulePackDef>
+    <defName>Sentence_InfluenceSuccess</defName>
+    <rulePack>
+      <rulesStrings>
+        <li>sent->It went well.</li>
+      </rulesStrings>
+    </rulePack>
+  </RulePackDef>
+  
+  <RulePackDef>
+    <defName>Sentence_InfluenceNeutral</defName>
+    <rulePack>
+      <rulesStrings>
+        <li>sent->It went akwardly.</li>
+      </rulesStrings>
+    </rulePack>
+  </RulePackDef>
+  
+  <RulePackDef>
+    <defName>Sentence_InfluenceFail</defName>
+    <rulePack>
+      <rulesStrings>
+        <li>sent->It went badly.</li>
+      </rulesStrings>
+    </rulePack>
+  </RulePackDef>
+  
+</Defs>

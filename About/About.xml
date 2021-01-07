@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+  <name>Amnabi's Society Core</name>
+  <author>Amnabi</author>
+  <url></url>
+  <supportedVersions>
+    <li>1.2</li>
+  </supportedVersions>
+  <packageId>AMN.SOCIETYCORE</packageId>
+  <loadAfter>
+    <li>brrainz.harmony</li>
+  </loadAfter>
+  <description>A base mod for more complex social interactions.</description>
+</ModMetaData>

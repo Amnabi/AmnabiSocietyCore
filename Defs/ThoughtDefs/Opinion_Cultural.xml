@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThoughtDef>
+    <defName>OtherCoverGood</defName>
+    <thoughtClass>Amnabi.Thought_OtherCoveringGood</thoughtClass>
+    <workerClass>Amnabi.ThoughtWorker_OtherCoverGood</workerClass>
+    <validWhileDespawned>false</validWhileDespawned>
+    <stages>
+      <li>
+        <label>covering {0}</label>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>OtherCoverBad</defName>
+    <thoughtClass>Amnabi.Thought_OtherCoveringBad</thoughtClass>
+    <workerClass>Amnabi.ThoughtWorker_OtherCoverBad</workerClass>
+    <validWhileDespawned>false</validWhileDespawned>
+    <stages>
+      <li>
+        <label>covering {0}</label>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>OtherRevealGood</defName>
+    <thoughtClass>Amnabi.Thought_OtherRevealingGood</thoughtClass>
+    <workerClass>Amnabi.ThoughtWorker_OtherRevealGood</workerClass>
+    <validWhileDespawned>false</validWhileDespawned>
+    <stages>
+      <li>
+        <label>revealing {0}</label>
+      </li>
+    </stages>
+  </ThoughtDef>
+  <ThoughtDef>
+    <defName>OtherRevealBad</defName>
+    <thoughtClass>Amnabi.Thought_OtherRevealingBad</thoughtClass>
+    <workerClass>Amnabi.ThoughtWorker_OtherRevealBad</workerClass>
+    <validWhileDespawned>false</validWhileDespawned>
+    <stages>
+      <li>
+        <label>revealing {0}</label>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>DressedAppropriately</defName>
+    <thoughtClass>Amnabi.Thought_OtherWearingEncouragedApparel</thoughtClass>
+    <workerClass>Amnabi.ThoughtWorker_OtherWearingEncouragedApparel</workerClass>
+    <validWhileDespawned>false</validWhileDespawned>
+    <stages>
+      <li>
+        <label>correctly dressed ({0})</label>
+		<baseOpinionOffset>0</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+  
+  <ThoughtDef>
+    <defName>DressedInappropriately</defName>
+    <thoughtClass>Amnabi.Thought_OtherWearingDiscouragedApparel</thoughtClass>
+    <workerClass>Amnabi.ThoughtWorker_OtherWearingDiscouragedApparel</workerClass>
+    <validWhileDespawned>false</validWhileDespawned>
+    <stages>
+      <li>
+        <label>incorrectly dressed ({0})</label>
+		<baseOpinionOffset>0</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>MatchingPassion</defName>
+    <thoughtClass>Amnabi.Thought_SimularPassions</thoughtClass>
+    <workerClass>Amnabi.ThoughtWorker_SimularPassions</workerClass>
+    <validWhileDespawned>false</validWhileDespawned>
+    <stages>
+      <li>
+        <label>some passion overlap</label>
+		<description>our passions overlap.</description>
+		<baseOpinionOffset>0</baseOpinionOffset>
+      </li>
+      <li>
+        <label>simular passions</label>
+		<description>we have simular passions!</description>
+		<baseOpinionOffset>0</baseOpinionOffset>
+      </li>
+      <li>
+        <label>very simular passions</label>
+		<description>we very have simular passions!</description>
+		<baseOpinionOffset>0</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>UnacceptableMarriageType</defName>
+    <thoughtClass>Thought_SituationalSocial</thoughtClass>
+    <workerClass>Amnabi.ThoughtWorker_HomoHetero</workerClass>
+    <validWhileDespawned>false</validWhileDespawned>
+    <stages>
+      <li>
+        <label>is married</label>
+		<description>getting married is wrong.</description>
+		<baseOpinionOffset>-20</baseOpinionOffset>
+      </li>
+      <li>
+        <label>heterosexual marriage</label>
+		<description>heterosexual marriage is wrong.</description>
+		<baseOpinionOffset>-20</baseOpinionOffset>
+      </li>
+      <li>
+        <label>gay marriage</label>
+		<description>gay marriage is wrong.</description>
+		<baseOpinionOffset>-20</baseOpinionOffset>
+      </li>
+      <li>
+        <label>lesbian marriage</label>
+		<description>lesbian marriage is wrong.</description>
+		<baseOpinionOffset>-20</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+  <ThoughtDef>
+    <defName>SpouseIsTooYoung</defName>
+    <thoughtClass>Thought_SituationalSocial</thoughtClass>
+    <workerClass>Amnabi.ThoughtWorker_SpouseAgeOpinion</workerClass>
+    <validWhileDespawned>false</validWhileDespawned>
+    <stages>
+      <li>
+        <label>spouse is a bit young</label>
+		<description>the age of their spouse is a bit younger than things should be.</description>
+		<baseOpinionOffset>-5</baseOpinionOffset>
+      </li>
+      <li>
+        <label>spouse is too young</label>
+		<description>the age of their spouse is a lot younger than things should be.</description>
+		<baseOpinionOffset>-10</baseOpinionOffset>
+      </li>
+      <li>
+        <label>spouse is way too young</label>
+		<description>the age of their spouse is a way younger than things should be.</description>
+		<baseOpinionOffset>-20</baseOpinionOffset>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+</Defs>
