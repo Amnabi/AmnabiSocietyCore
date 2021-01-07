@@ -1,0 +1,6 @@
+D:\Games\RimWorld.v1.2.2753\Mods\AmnabisSocietyCore\Source\AmnabiSocietyCore\obj\Debug\Amnabi_SocietyCore.csprojAssemblyReference.cache
+D:\Games\RimWorld.v1.2.2753\Mods\AmnabisSocietyCore\Source\AmnabiSocietyCore\obj\Debug\Amnabi.Properties.Resources.resources
+D:\Games\RimWorld.v1.2.2753\Mods\AmnabisSocietyCore\Source\AmnabiSocietyCore\obj\Debug\Amnabi_SocietyCore.csproj.GenerateResource.cache
+D:\Games\RimWorld.v1.2.2753\Mods\AmnabisSocietyCore\Source\AmnabiSocietyCore\obj\Debug\Amnabi_SocietyCore.csproj.CoreCompileInputs.cache
+D:\Games\RimWorld.v1.2.2753\Mods\AmnabisSocietyCore\1.2\Assemblies\AmnabiSocietyCore.dll
+D:\Games\RimWorld.v1.2.2753\Mods\AmnabisSocietyCore\Source\AmnabiSocietyCore\obj\Debug\AmnabiSocietyCore.dll

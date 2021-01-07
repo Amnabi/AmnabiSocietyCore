@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F3DA945B-AB1B-492C-9C59-A17E61362AA5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Amnabi</RootNamespace>
+    <AssemblyName>AmnabiSocietyCore</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\1.2\Assemblies\</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>0</WarningLevel>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Assemblies\</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet>
+    </CodeAnalysisRuleSet>
+    <LangVersion>latest</LangVersion>
+    <DefineConstants>DEBUG</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="0Harmony, Version=2.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lib.Harmony.2.0.0.5\lib\net472\0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation" />
+    <Reference Include="System.XML" />
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\UnityEngine.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>..\..\..\..\RimWorldWin64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Amnabi\Core\Idea\Exp_Value.cs" />
+    <Compile Include="Amnabi\Core\IdentityParent\FactionDataExtend.cs" />
+    <Compile Include="Amnabi\Core\Idea\Exp_IdeaBasic.cs" />
+    <Compile Include="Amnabi\Core\Idea\Exp_Identity.cs" />
+    <Compile Include="Amnabi\Core\Misc\Actor.cs" />
+    <Compile Include="Amnabi\Core\Misc\AmnabiMisc.cs" />
+    <Compile Include="Amnabi\Core\Misc\AmnabiDefs.cs" />
+    <Compile Include="Amnabi\Core\Core.cs" />
+    <Compile Include="Amnabi\Core\IdentityParent\CompPawnIdentity.cs" />
+    <Compile Include="Amnabi\Core\Comps\CompOwnable.cs" />
+    <Compile Include="Amnabi\Core\Comps\CompOwnership.cs" />
+    <Compile Include="Amnabi\Core\IdentityParent\CompSettlement.cs" />
+    <Compile Include="Amnabi\Core\Misc\MainTab_PolicyAndLaw.cs" />
+    <Compile Include="Amnabi\Exp_Action.cs" />
+    <Compile Include="Amnabi\Core\Idea\Exp_Filter.cs" />
+    <Compile Include="Amnabi\Core\Idea\Exp_Idea.cs" />
+    <Compile Include="Amnabi\ModularCulture\Idea\Exp_Idea_Marriage.cs" />
+    <Compile Include="Amnabi\ModularCulture\Idea\Exp_Idea_Settlement.cs" />
+    <Compile Include="Amnabi\ModularCulture\Idea\Exp_Idea_SocialNorms.cs" />
+    <Compile Include="Amnabi\Core\Idea\Exp_PersonalIdentity.cs" />
+    <Compile Include="Amnabi\Core\Misc\FactionIdentityGen.cs" />
+    <Compile Include="Amnabi\ModularControl\Harmony_SocietyPawnControl.cs" />
+    <Compile Include="Amnabi\ModularCulture\Harmony_SocietyCulture.cs" />
+    <Compile Include="Amnabi\Core\Harmony_SocietyCore.cs" />
+    <Compile Include="Amnabi\ModularCulture\_Marriage\TO_Marriage.cs" />
+    <Compile Include="Amnabi\ModularFood\Harmony_SocietyFood.cs" />
+    <Compile Include="Amnabi\ModularControl\Harmony_SocietyDesignationPatcher.cs" />
+    <Compile Include="Amnabi\Core\Misc\InteractionWorker_IdeaExchange.cs" />
+    <Compile Include="Amnabi\Core\Misc\ITab_Pawn_Identity.cs" />
+    <Compile Include="Amnabi\Core\Jobs\JobGiver_BFightEnemy.cs" />
+    <Compile Include="Amnabi\Core\Jobs\JobGiver_MoveTowardsIntruder.cs" />
+    <Compile Include="Amnabi\ModularHostilityLogic\Harmony_SocietyHostility.cs" />
+    <Compile Include="Amnabi\ModularStructure\Harmony_SocietyStructure.cs" />
+    <Compile Include="Amnabi\ModularStructure\AMN_Structure.cs" />
+    <Compile Include="Amnabi\ModularStructure\AMN_StructureGenerator.cs" />
+    <Compile Include="Amnabi\ModularStructure\AMN_StructureUpgrade.cs" />
+    <Compile Include="Amnabi\ModularCulture\_Apparel\TO_Clothing.cs" />
+    <Compile Include="Amnabi\Core\TO_Generic.cs" />
+    <Compile Include="Amnabi\Core\WCAM.cs" />
+    <Compile Include="Amnabi\Core\Misc\Window_IdeaGen.cs" />
+    <Compile Include="Amnabi\ModularStructure\StructureMisc.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\About\About.xml">
+      <Link>About.xml</Link>
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Amnabi\ModularCulture\_Food\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
