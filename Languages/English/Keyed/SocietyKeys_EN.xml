@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+	<AmnabiSociety.adjustRaiderAgeAndSex>Adjust raider age and sex to match faction draft condition.</AmnabiSociety.adjustRaiderAgeAndSex>
+	<AmnabiSociety.enableAutoBuild>Enable auto build. Pawns and factions will claim land and build as they see fit.</AmnabiSociety.enableAutoBuild>
+	<AmnabiSociety.societysettings>This is a big mod and will very likely have compatiablity problems. If you do have any you can enable or disable these following options and reload the game.</AmnabiSociety.societysettings>
+	
+	<AmnabiSociety.DiscouragedFood>Discouraged Food</AmnabiSociety.DiscouragedFood>
+</LanguageData>

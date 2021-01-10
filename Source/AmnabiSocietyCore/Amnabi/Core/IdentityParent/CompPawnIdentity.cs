@@ -57,7 +57,7 @@ namespace Amnabi
 			if(pawnActor == null)
 			{
 				pawnActor = new Actor_Pawn();
-
+				pawnActor.pawnRef = this.parent as Pawn;
 			}
 			return pawnActor;
 		}

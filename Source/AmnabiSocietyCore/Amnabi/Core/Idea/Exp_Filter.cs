@@ -9,7 +9,7 @@ using Verse;
 
 namespace Amnabi {
 
-    public class Exp_Filter : Exp_Idea {
+    public abstract class Exp_Filter : Exp_Idea {
         
         public override string GetLabel() 
         {
@@ -214,7 +214,7 @@ namespace Amnabi {
                 {
                     stringBuilderInstanceAppend("All of the following" + bracketOpen(stackDepth + 1));
                     LS_Desc(stackDepth + 1, subFilters);
-                    stringBuilderInstanceAppend(tabN(stackDepth + 1, subFilters.Last()) + bracketEnd(stackDepth + 1));
+                    stringBuilderInstanceAppend(bracketEnd(stackDepth + 1));
                     popColor();
                     return;
                 }
@@ -276,7 +276,6 @@ namespace Amnabi {
         {
             return Of(new List<Exp_Idea>{ io, io2, io3, io4, io5 });
         }
-
         public static Exp_Idea Of(IEnumerable<Exp_Idea> io)
         {
             string str = ID(io);
@@ -288,7 +287,6 @@ namespace Amnabi {
             }
             return filtGen()[str] as Exp_Idea;
         }
-        
         public override object output(Dictionary<string, object> bParam, int stackDepth, HashSet<string> occupieddefinetags) 
         {
             Bool3 boolStack = Bool3.True;
@@ -302,12 +300,10 @@ namespace Amnabi {
             }
             return this.registerReturn(boolStack);
         }
-
         public List<Exp_Idea> subFilters = new List<Exp_Idea>();
 
         public Exp_F_AND() : base()
         {
-            //Textures should be manually assigned
         }
 
         public override void GetDescriptionDeep(int stackDepth) 
@@ -329,7 +325,7 @@ namespace Amnabi {
             {
                 stringBuilderInstanceAppend("All of the following" + bracketOpen(stackDepth + 1));
                 LS_Desc(stackDepth + 1, subFilters);
-                stringBuilderInstanceAppend(tabN(stackDepth + 1, subFilters.Last()) + bracketEnd(stackDepth + 1));
+                stringBuilderInstanceAppend(bracketEnd(stackDepth + 1));
                 popColor();
                 return;
             }
@@ -438,7 +434,7 @@ namespace Amnabi {
             {
                 stringBuilderInstanceAppend("One of the following" + bracketOpen(stackDepth + 1));
                 LS_Desc(stackDepth + 1, subFilters);
-                stringBuilderInstanceAppend(tabN(stackDepth + 1, subFilters.Last()) + bracketEnd(stackDepth + 1));
+                stringBuilderInstanceAppend(bracketEnd(stackDepth + 1));
                 popColor();
                 return;
             }
@@ -453,7 +449,6 @@ namespace Amnabi {
             }
         }
     }
-
     public class Exp_F_NOT : Exp_Filter {
         public override string GenerateSLID() 
         {

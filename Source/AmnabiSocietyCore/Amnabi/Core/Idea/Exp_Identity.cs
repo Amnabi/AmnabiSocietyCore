@@ -28,7 +28,31 @@ namespace Amnabi {
     public class Exp_Identity : Exp_Idea {
         public static Exp_Identity param_0V = null;
         public static string param_0K = "Choose";
-
+        
+        public override string texturePath()
+        {
+            switch(identityType)
+            {
+                case (IdentityType.Ideology):
+                {
+                    return "UI/IdeaIcons/IdeologyIdentity";
+                }
+                case (IdentityType.Spiritual):
+                {
+                    return "UI/IdeaIcons/SpiritualIdentity";
+                }
+                case (IdentityType.Culture):
+                {
+                    return "UI/IdeaIcons/CultureIdentity";
+                }
+                default:
+                {
+                    Log.Warning("Hey! No Identity Type!");
+                    break;
+                }
+            }
+            return null;
+        }
         public Exp_Idea setIdentityType(IdentityType it)
         {
             identityType = it;
@@ -37,19 +61,16 @@ namespace Amnabi {
                 case (IdentityType.Ideology):
                 {
                     identityName = NameGenerator.GenerateName(RulePackDefOf.NamerWorld);
-                    texturePath = "UI/IdeaIcons/IdeologyIdentity";
                     break;
                 }
                 case (IdentityType.Spiritual):
                 {
                     identityName = NameGenerator.GenerateName(RulePackDefOf.NamerWorld);
-                    texturePath = "UI/IdeaIcons/SpiritualIdentity";
                     break;
                 }
                 case (IdentityType.Culture):
                 {
                     identityName = NameGenerator.GenerateName(RulePackDefOf.NamerWorld);
-                    texturePath = "UI/IdeaIcons/CultureIdentity";
                     break;
                 }
                 default:

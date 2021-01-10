@@ -47,7 +47,6 @@ namespace Amnabi {
             }
             return Color.white;
         }
-
     }
 
     public class Exp_Idea : IExposable, ILoadReferenceable {
@@ -60,17 +59,40 @@ namespace Amnabi {
 			{
 				if (this.theTexture == null)
 				{
-					this.theTexture = ContentFinder<Texture2D>.Get(this.texturePath, true);
+					this.theTexture = ContentFinder<Texture2D>.Get(this.texturePath(), true);
 				}
 				return this.theTexture;
 			}
 		}
+        public virtual string texturePath()
+        {
+            return "UI/IdeaIcons/CultureIdentity";
+        }
 
 		[Unsaved]
 		private Texture2D theTexture;
-        public string texturePath;
         public int referenceNum;//on load, ones with 0 fill be filtered away!
         public string savedLoadID;
+
+        public static StringBuilder activityHashBuilder = new StringBuilder();
+        public static string currentActivityHash()
+        {
+            activityHashBuilder.Clear();
+            foreach(Exp_Idea i in activityPathStack)
+            {
+                activityHashBuilder.Append(i.GetHashCode());
+            }
+            return activityHashBuilder.ToString();
+        }
+        public static List<Exp_Idea> activityPathStack = new List<Exp_Idea>();
+        public static void pushActivityStack(Exp_Idea expIdea)
+        {
+            activityPathStack.Add(expIdea);
+        }
+        public static void popActivityStack()
+        {
+            activityPathStack.RemoveAt(activityPathStack.Count - 1);
+        }
 
         public virtual object output(Dictionary<string, object> bParam, int stackDepth, HashSet<string> occupieddefinetags)
         {
@@ -154,6 +176,39 @@ namespace Amnabi {
         {
         }
         
+        public static List<object> scopeStack = new List<object>();
+        public static void pushScope(object obj)
+        {
+            scopeStack.Add(obj);
+        }
+        public static void popScope()
+        {
+            scopeStack.Pop();
+        }
+        public static void clearScopes()
+        {
+            scopeStack.Clear();
+        }
+        public static object currentScope()
+        {
+            return scopeBefore(0);
+        }
+        public static object scopeBefore(int scopeBack)
+        {
+            return scopeStack[scopeStack.Count - 1 - scopeBack];
+        }
+        public static Pawn currentPawn()
+        {
+            return scopeBefore(0) as Pawn;
+        }
+        public static Comp_SettlementTicker currentCST()
+        {
+            return scopeBefore(0) as Comp_SettlementTicker;
+        }
+        public static Faction currentFaction()
+        {
+            return scopeBefore(0) as Faction;
+        }
         public virtual IEnumerable<string> exclusiveHash()
         {
             yield break;
@@ -179,10 +234,10 @@ namespace Amnabi {
 
         public virtual Exp_Idea initialize()
         {
-            if(this.texturePath == null)
+            /**if(this.texturePath == null)
             {
                 this.texturePath = "UI/IdeaIcons/CultureIdentity";
-            }
+            }**/
             return this;
         }
 
@@ -192,7 +247,7 @@ namespace Amnabi {
             {
                 GetUniqueLoadID();
             }
-			Scribe_Values.Look<string>(ref this.texturePath, "opinionable_texPath", "", false);
+			//Scribe_Values.Look<string>(ref this.texturePath, "opinionable_texPath", "", false);
 			Scribe_Values.Look<string>(ref this.savedLoadID, "opinionable_savedLoadID", "", false);
         }
         public bool descNeedsNewLine()
@@ -221,7 +276,7 @@ namespace Amnabi {
         }
         public static string bracketEnd(int stackDepth)
         {
-            return DescriptionHandler.style == DescriptionStyle.Paradox? newLine() + tabN(stackDepth) + "}" : "";
+            return DescriptionHandler.style == DescriptionStyle.Paradox? newLine() + tabN(stackDepth) + "}" : tabN(stackDepth);
         }
         public static string LS_Desc(int tabs, Exp_Idea nextIdea)
         {

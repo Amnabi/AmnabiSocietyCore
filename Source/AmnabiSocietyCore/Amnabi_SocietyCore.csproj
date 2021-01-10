@@ -86,11 +86,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Amnabi\Core\Actor\Actor_Faction.cs" />
+    <Compile Include="Amnabi\Core\Actor\Actor_Pawn.cs" />
+    <Compile Include="Amnabi\Core\Actor\Actor_Settlement.cs" />
+    <Compile Include="Amnabi\Core\Enums\AMN_Enums.cs" />
+    <Compile Include="Amnabi\Core\Idea\Exp_Activity.cs" />
+    <Compile Include="Amnabi\Core\Idea\Exp_Scope.cs" />
     <Compile Include="Amnabi\Core\Idea\Exp_Value.cs" />
+    <Compile Include="Amnabi\Core\Idea\Exp_Value_Vector.cs" />
     <Compile Include="Amnabi\Core\IdentityParent\FactionDataExtend.cs" />
     <Compile Include="Amnabi\Core\Idea\Exp_IdeaBasic.cs" />
     <Compile Include="Amnabi\Core\Idea\Exp_Identity.cs" />
-    <Compile Include="Amnabi\Core\Misc\Actor.cs" />
+    <Compile Include="Amnabi\Core\Jobs\JobGiver_TryMoveBest.cs" />
+    <Compile Include="Amnabi\Core\Jobs\JobList.cs" />
+    <Compile Include="Amnabi\Core\Actor\Actor.cs" />
     <Compile Include="Amnabi\Core\Misc\AmnabiMisc.cs" />
     <Compile Include="Amnabi\Core\Misc\AmnabiDefs.cs" />
     <Compile Include="Amnabi\Core\Core.cs" />
@@ -99,30 +108,33 @@
     <Compile Include="Amnabi\Core\Comps\CompOwnership.cs" />
     <Compile Include="Amnabi\Core\IdentityParent\CompSettlement.cs" />
     <Compile Include="Amnabi\Core\Misc\MainTab_PolicyAndLaw.cs" />
-    <Compile Include="Amnabi\Exp_Action.cs" />
+    <Compile Include="Amnabi\Core\SocietySettings.cs" />
     <Compile Include="Amnabi\Core\Idea\Exp_Filter.cs" />
     <Compile Include="Amnabi\Core\Idea\Exp_Idea.cs" />
-    <Compile Include="Amnabi\ModularCulture\Idea\Exp_Idea_Marriage.cs" />
-    <Compile Include="Amnabi\ModularCulture\Idea\Exp_Idea_Settlement.cs" />
-    <Compile Include="Amnabi\ModularCulture\Idea\Exp_Idea_SocialNorms.cs" />
+    <Compile Include="Amnabi\ModularApparel\Harmony_Apparel.cs" />
+    <Compile Include="Amnabi\ModularControl\Idea\Exp_Idea_Control.cs" />
+    <Compile Include="Amnabi\ModularRomance\Idea\Exp_Idea_Marriage.cs" />
+    <Compile Include="Amnabi\ModularStructure\Idea\Exp_Idea_Settlement.cs" />
+    <Compile Include="Amnabi\ModularApparel\Idea\Exp_Idea_Apparel.cs" />
     <Compile Include="Amnabi\Core\Idea\Exp_PersonalIdentity.cs" />
     <Compile Include="Amnabi\Core\Misc\FactionIdentityGen.cs" />
     <Compile Include="Amnabi\ModularControl\Harmony_SocietyPawnControl.cs" />
-    <Compile Include="Amnabi\ModularCulture\Harmony_SocietyCulture.cs" />
+    <Compile Include="Amnabi\ModularRomance\Harmony_SocietyRomance.cs" />
     <Compile Include="Amnabi\Core\Harmony_SocietyCore.cs" />
-    <Compile Include="Amnabi\ModularCulture\_Marriage\TO_Marriage.cs" />
+    <Compile Include="Amnabi\ModularRomance\_Marriage\TO_Marriage.cs" />
     <Compile Include="Amnabi\ModularFood\Harmony_SocietyFood.cs" />
     <Compile Include="Amnabi\ModularControl\Harmony_SocietyDesignationPatcher.cs" />
     <Compile Include="Amnabi\Core\Misc\InteractionWorker_IdeaExchange.cs" />
     <Compile Include="Amnabi\Core\Misc\ITab_Pawn_Identity.cs" />
     <Compile Include="Amnabi\Core\Jobs\JobGiver_BFightEnemy.cs" />
     <Compile Include="Amnabi\Core\Jobs\JobGiver_MoveTowardsIntruder.cs" />
+    <Compile Include="Amnabi\ModularFood\Idea\Exp_Idea_Food.cs" />
     <Compile Include="Amnabi\ModularHostilityLogic\Harmony_SocietyHostility.cs" />
     <Compile Include="Amnabi\ModularStructure\Harmony_SocietyStructure.cs" />
     <Compile Include="Amnabi\ModularStructure\AMN_Structure.cs" />
     <Compile Include="Amnabi\ModularStructure\AMN_StructureGenerator.cs" />
     <Compile Include="Amnabi\ModularStructure\AMN_StructureUpgrade.cs" />
-    <Compile Include="Amnabi\ModularCulture\_Apparel\TO_Clothing.cs" />
+    <Compile Include="Amnabi\ModularApparel\_Apparel\TO_Clothing.cs" />
     <Compile Include="Amnabi\Core\TO_Generic.cs" />
     <Compile Include="Amnabi\Core\WCAM.cs" />
     <Compile Include="Amnabi\Core\Misc\Window_IdeaGen.cs" />
@@ -146,9 +158,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Amnabi\ModularCulture\_Food\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

@@ -54,22 +54,53 @@ namespace Amnabi
             AmnabiSocietyCore.LoadPref();
             //harmony.Patch(AccessTools.Method(typeof(ForbidUtility), "CaresAboutForbidden", null, null), null, new HarmonyMethod(typeof(Harmony_SocietyCore), "CaresAboutForbiddenP", null), null);
             
-            harmony.Patch(AccessTools.Method(typeof(RaidStrategyWorker), "MakeLords", null, null), new HarmonyMethod(typeof(Harmony_SocietyCore), "MakeLordsPrefix", null), null, null);
-            
-            /**harmony.Patch(
-                AccessTools.Method(typeof(JobDriver), "EndJobWith"),
+            if(AmnabiSocietyCore.adjustRaiderAgeAndSex)
+            {
+                harmony.Patch(AccessTools.Method(typeof(RaidStrategyWorker), "MakeLords", null, null), new HarmonyMethod(typeof(Harmony_SocietyCore), "MakeLordsPrefix", null), null, null);
+            }
+
+            harmony.Patch(
+                AccessTools.Method(typeof(Pawn_JobTracker), "EndCurrentJob"),
                 null,
                 new HarmonyMethod(typeof(Harmony_SocietyCore), nameof(EndJobWith))
-                );**/
-            Harmony_SocietyDesignationPatcher.Patch(harmony);
-            Harmony_SocietyFood.Patch(harmony);
+            );
+            
+            if(AmnabiSocietyCore.apply_DesignatorPatch)
+            {
+                Harmony_SocietyDesignationPatcher.Patch(harmony);
+            }
+            
+            if(AmnabiSocietyCore.apply_FoodPatch)
+            {
+                Harmony_SocietyFood.Patch(harmony);
+            }
+
             Harmony_SocietyStructure.Patch(harmony);
+
             Harmony_SocietyHostility.Patch(harmony);
-            Harmony_SocietyPawnControl.Patch(harmony);
-            Harmony_SocietyCulture.Patch(harmony);
+
+            if(AmnabiSocietyCore.apply_PawnControlPatch)
+            {
+                Harmony_SocietyPawnControl.Patch(harmony);
+            }
+            
+            if(AmnabiSocietyCore.apply_ApparelPatch)
+            {
+                Harmony_SocietyApparel.Patch(harmony);
+            }
+            
+            if(AmnabiSocietyCore.apply_RomancePatch)
+            {
+                Harmony_SocietyRomance.Patch(harmony);
+            }
 
             DefPatcher();
         }
+        
+		public static void EndJobWith(Pawn_JobTracker __instance, Pawn ___pawn, JobCondition condition, bool startNewJob, bool canReturnToPool)
+		{
+            ___pawn.FVData()?.endJobWith(__instance.curJob.loadID, condition);
+		}
 
         public static void DefPatcher()
         {
@@ -122,11 +153,6 @@ namespace Amnabi
                 }
             }
         }
-
-		public static void EndJobWith(JobDriver __instance, JobCondition condition)
-		{
-            Log.Warning(__instance + " " + __instance.pawn.Label + " " + condition);
-		}
 
 		public static bool MakeLordsPrefix(RaidStrategyWorker __instance, IncidentParms parms, List<Pawn> pawns)
 		{

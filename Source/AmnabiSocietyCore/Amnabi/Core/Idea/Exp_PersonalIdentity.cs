@@ -102,6 +102,7 @@ namespace Amnabi {
 
 		public void ExposeData()
 		{
+            Scribe_Values.Look<InterestLevel>(ref this.interestLevel, "interestLevel");
             Scribe_Collections.Look<IdeaData>(ref this.identityPriorityRegular, "identity_PriorityListRegular", LookMode.Deep);
             Scribe_Collections.Look<IdeaData>(ref this.identityPriorityDefines, "identity_PriorityListDefines", LookMode.Deep);
             Scribe_Collections.Look<Exp_Identity>(ref this.contactedIdentities, "identity_ContactList", LookMode.Reference);
@@ -931,9 +932,6 @@ namespace Amnabi {
         {
             return func283947(exp.GetType(), "hostilityOverride", s_hostilityTick);
         }
-        
-
-
         public static bool func283947(Type ty, string methodName, Dictionary<Type, bool> storage)
         {
             if(!storage.ContainsKey(ty))
@@ -962,6 +960,8 @@ namespace Amnabi {
 
         public List<IdeaData> identityPriorityDefines = new List<IdeaData>();//
         public List<IdeaData> identityPriorityRegular = new List<IdeaData>(); //regular
+
+        public InterestLevel interestLevel;
 
         //public List<IdeaData> definitionPriority = new List<IdeaData>(); 
         

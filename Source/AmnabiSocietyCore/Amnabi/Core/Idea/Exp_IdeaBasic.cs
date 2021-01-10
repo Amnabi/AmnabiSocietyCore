@@ -35,7 +35,11 @@ namespace Amnabi {
             }
             return postGen()[str];
         }
-        public Exp_DeferToPlayer() { texturePath = "UI/IdeaIcons/SelfInterest"; }
+        public override string texturePath()
+        {
+            return "UI/IdeaIcons/SelfInterest";
+        }
+        public Exp_DeferToPlayer() { }
 
         public override Compliance draftCompliance(IdeaData opd, Pawn p, PlayerData pd)
         {
@@ -84,8 +88,12 @@ namespace Amnabi {
             }
             return postGen()[str];
         }
-
-        public Exp_SelfInterest() { texturePath = "UI/IdeaIcons/SelfInterest"; }
+        
+        public override string texturePath()
+        {
+            return "UI/IdeaIcons/SelfInterest";
+        }
+        public Exp_SelfInterest() { }
 
         public override Compliance draftCompliance(IdeaData opd, Pawn p, PlayerData pd)
         {
@@ -132,6 +140,10 @@ namespace Amnabi {
         public override void pawnTick2400(IdeaData opd, Actor_Pawn actor, Pawn pawn)
         {
             base.pawnTick2400(opd, actor, pawn);
+            if(!AmnabiSocietyCore.enableAutoBuild)
+            {
+                return;
+            }
             Map curMap = pawn.MapHeld;
             if(curMap != null && pawn.Faction == Faction.OfPlayer)
             {
@@ -152,7 +164,16 @@ namespace Amnabi {
                             doeydo = false;
                             //use the faction ownership for now!
                             //AMN_Structure.BuildingGenAttempt(cst, actor, cOwner.ownership, pawn, AMN_StructureGenerator.allGenerators["Bedroom"], forFac, curMap, pawn.Position, 7);
-                            AMN_Structure.BuildingGenAttempt(cst, actor, cst.ownership, cOwner.ownership, pawn, AMN_StructureGenerator.allGenerators["Bedroom"], forFac, curMap, pawn.Position, 7);
+                            AMN_Structure resultStructure = AMN_Structure.BuildingGenAttempt(cst, actor, cst.ownership, cOwner.ownership, pawn, AMN_StructureGenerator.allGenerators["Bedroom"], forFac, curMap, pawn.Position, 7);
+                            if(resultStructure != null)
+                            {
+                                IntVec3 iV3 = (resultStructure.vectorAA + resultStructure.vectorBB);
+                                iV3.x /= 2;
+                                iV3.y /= 2;
+                                iV3.z /= 2;
+                                Messages.Message(pawn + " wants to build a house for themselves.", new TargetInfo(iV3, curMap, false), MessageTypeDefOf.NeutralEvent, true);
+                            }
+                            
                             /**AMN_Structure heyYo = AMN_Structure.BuildingGenAttempt(cst, actor, cst.ownership, cst.ownership, pawn, AMN_StructureGenerator.allGenerators["Bedroom"], forFac, curMap, pawn.Position, 7);
                             if(heyYo != null)
                             {
@@ -253,8 +274,12 @@ namespace Amnabi {
             }
             return Compliance.None;
         }
-
-        public Exp_PersonalLoyalty() { texturePath = "UI/IdeaIcons/PersonalLoyalty"; }
+        
+        public override string texturePath()
+        {
+            return "UI/IdeaIcons/PersonalLoyalty";
+        }
+        public Exp_PersonalLoyalty() { }
         public Pawn follow;
         public bool active;
         
@@ -305,7 +330,11 @@ namespace Amnabi {
         }
 
         public Faction faction;
-        public Exp_FactionInterest() { texturePath = "UI/IdeaIcons/FactionInterest"; }
+        public override string texturePath()
+        {
+            return "UI/IdeaIcons/FactionInterest";
+        }
+        public Exp_FactionInterest() { }
         
         public override Bool3 hostilityOverride(IdeaData opd, Pawn perspective, Thing target)
         {

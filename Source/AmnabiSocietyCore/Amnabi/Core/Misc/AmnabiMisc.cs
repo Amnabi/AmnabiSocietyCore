@@ -723,6 +723,16 @@ namespace Amnabi {
         {
             return pawn.GetComp<CompPawnIdentity>();
         }
+        public static Actor_Pawn PA(this Pawn pawn)
+        {
+            return pawn.PI()?.getActor();
+        }
+        public static FV_Data FVData(this Pawn pawn)
+        {
+			return null;
+            //return pawn.PA()?.FVDATA;
+        }
+
         public static Thing thingsAtCellStatic;
         public static IntVec3 intVecAtCellStatic;
         public static void SpiralIterate(Map map, IntVec3 iVec3, ref int referenceInt, int iterNum, Action act)
@@ -2014,16 +2024,29 @@ namespace Amnabi {
 		{
 			pawn.mindState.nextApparelOptimizeTick = Find.TickManager.TicksGame + Rand.Range(6000, 9000);
 		}
-        public static bool DoJob(this ThinkNode jg, Pawn pawn, JobIssueParams jip)
+        public static bool DoJobKeyed(this ThinkNode jg, Pawn pawn, out Job jobRef, JobIssueParams jip = default(JobIssueParams))
         {
             ThinkResult result = jg.TryIssueJobPackage(pawn, jip);
             if(result.IsValid)
             {
 				Job bb = result.Job;
 				bb.playerForced = true;
-				pawn.jobs.TryTakeOrderedJob_NewTemp(bb, JobTag.Misc);
-				//pawn.jobs.StartJob(result.Job, JobCondition.InterruptForced, null, false, false, null, result.Tag, result.FromQueue, false);
-                return true;
+				bool res = pawn.jobs.TryTakeOrderedJob_NewTemp(bb, JobTag.Misc);
+				jobRef = bb;
+                return res;
+            }
+			jobRef = null;
+            return false;
+        }
+        public static bool DoJob(this ThinkNode jg, Pawn pawn, JobIssueParams jip = default(JobIssueParams))
+        {
+            ThinkResult result = jg.TryIssueJobPackage(pawn, jip);
+            if(result.IsValid)
+            {
+				Job bb = result.Job;
+				bb.playerForced = true;
+				bool res = pawn.jobs.TryTakeOrderedJob_NewTemp(bb, JobTag.Misc);
+                return res;
             }
             return false;
         }

@@ -86,7 +86,7 @@ namespace Amnabi {
 		}
         static Window_IdeaGen()
         {
-			allOpinionables.Add("Discouraged Food", Exp_DiscouragedFood.generatorFunc);
+			allOpinionables.Add("AmnabiSociety.DiscouragedFood".Translate(), Exp_DiscouragedFood.generatorFunc);
 			allOpinionables.Add("Encouraged Food", Exp_EncouragedFood.generatorFunc);
 
 			allOpinionables.Add("Discouraged Apparel", Exp_DiscourageApparel.generatorFunc);
@@ -123,18 +123,41 @@ namespace Amnabi {
 			allFilters.Add("False F", Exp_F_False.generatorFunc);
 			allFilters.Add("Sex Includes", Exp_F_SexIncludes.generatorFunc);
 			allFilters.Add("Defined Filter", Exp_F_DefineCall.generatorFunc);
+
+			allActions.Add("Move To", Exp_A_MoveTo.generatorFunc);
+			allActions.Add("List", Exp_A_Stream.generatorFunc);
 			
+			registerScope<Pawn>("Perspective Pawn", Exp_S_PerspectivePawn.generatorFunc);
+			registerScope<Pawn>("Target Pawn", Exp_S_TargetPawn.generatorFunc);
+
 			registerVariable<double>("Number (Decimal)", Exp_V_Num.generatorFunc);
 			registerVariable<double>("Age of Pawn", Exp_V_PawnAge.generatorFunc);
+			registerVariable<double>("Add", Exp_V_AddDouble.generatorFunc);
+			registerVariable<double>("Subtract", Exp_V_SubDouble.generatorFunc);
+			registerVariable<double>("Multiply", Exp_V_MultiplyDouble.generatorFunc);
+			registerVariable<double>("Divide", Exp_V_DivideDouble.generatorFunc);
+			registerVariable<double>("Power", Exp_V_PowDouble.generatorFunc);
 			registerVariable<double>("Random", Exp_V_Random.generatorFunc);
+			
+			registerVariable<string>("Text", Exp_V_String.generatorFunc);
 
 			registerVariable<Vector3>("Location", Exp_V_Vector3.generatorFunc);
+			registerVariable<Vector3>("Location of", Exp_V_Vector3Pawn.generatorFunc);
+			registerVariable<Vector3>("Random Radius", Exp_V_Vector3RandomRadius.generatorFunc);
 
 			registerVariable<Sex>("Sex", Exp_V_Sex.generatorFunc);
 			registerVariable<Sex>("Sex of Pawn", Exp_V_PawnSex.generatorFunc);
 			
 			registerVariable<ThingDef>("Race of Pawn", Exp_V_PawnRaceDef.generatorFunc);
 			registerVariable<ThingDef>("Race", Exp_V_RaceDef.generatorFunc);
+
+			foreach(string si in wildCardScopes.Keys)
+			{
+				foreach(Type ss in allScopesTyped.Keys)
+				{
+					allScopesTyped[ss].Add(si, wildCardScopes[si]);
+				}
+			}
         }
 
 		public static string lastStringRef = "1";
@@ -149,14 +172,38 @@ namespace Amnabi {
 		
         public static Func<SFold, Exp_Idea> ideaGen2;
 		public static SFold lastSFold;
-
+		
+        public static Dictionary<string, Func<SFold, Exp_Idea>> allScopesTypeIgnore = new Dictionary<string, Func<SFold, Exp_Idea>>();
+        public static Dictionary<string, Func<SFold, Exp_Idea>> wildCardScopes = new Dictionary<string, Func<SFold, Exp_Idea>>();
+        public static Dictionary<Type, Dictionary<string, Func<SFold, Exp_Idea>>> allScopesTyped = new Dictionary<Type, Dictionary<string, Func<SFold, Exp_Idea>>>();
+        
+		public static Dictionary<string, Func<SFold, Exp_Idea>> allActions = new Dictionary<string, Func<SFold, Exp_Idea>>();
         public static Dictionary<string, Func<SFold, Exp_Idea>> allFilters = new Dictionary<string, Func<SFold, Exp_Idea>>();
         public static Dictionary<string, Func<SFold, Exp_Idea>> allOpinionables = new Dictionary<string, Func<SFold, Exp_Idea>>();
+
         public static Dictionary<Type, Dictionary<string, Func<SFold, Exp_Idea>>> allVariablesTyped = new Dictionary<Type, Dictionary<string, Func<SFold, Exp_Idea>>>();
         public static Dictionary<Func<SFold, Exp_Idea>, Type> allVariablesTypedR = new Dictionary<Func<SFold, Exp_Idea>, Type>();
         public static Dictionary<string, Func<SFold, Exp_Idea>> allVariablesTypeless = new Dictionary<string, Func<SFold, Exp_Idea>>();
-
-
+		
+		public static void registerScope(string name, Func<SFold, Exp_Idea> genFunc)
+		{
+			wildCardScopes.Add(name, genFunc);
+			allScopesTypeIgnore.Add(name, genFunc);
+		}
+		public static void registerScope<T>(string name, Func<SFold, Exp_Idea> genFunc)
+		{
+			allScopes(typeof(T)).Add(name, genFunc);
+			allScopesTypeIgnore.Add(name, genFunc);
+		}
+        public static Dictionary<string, Func<SFold, Exp_Idea>> allScopes(Type t)
+		{
+			if(!allScopesTyped.ContainsKey(t))
+			{
+				Dictionary<string, Func<SFold, Exp_Idea>> albamchi = new Dictionary<string, Func<SFold, Exp_Idea>>();
+				allScopesTyped.Add(t, albamchi);
+			}
+			return allScopesTyped[t];
+		}
         public static Dictionary<string, Func<SFold, Exp_Idea>> allVariables<T>()
 		{
 			if(!allVariablesTyped.ContainsKey(typeof(T)))
@@ -192,7 +239,6 @@ namespace Amnabi {
 			lastValid = ret != null;
 			return ret;
 		}
-
 		public float thisHorizontalOffsetX;
 		public bool lastValid = false;
 		public bool allValid = true;
@@ -201,12 +247,10 @@ namespace Amnabi {
 		public string[] lastInOutLabel;
 		public int style;//0 vert 1 horiz
 
-		public int Count
-		{
+		public int Count{
 			get {
 				return lastInOut == null ? 0 : lastInOut.Length;
 			}
-
 		}
 		//public List<SFold> subSFolds = new List<SFold>();
 
@@ -358,8 +402,7 @@ namespace Amnabi {
 				return 0;
 			}
 		}
-		
-		public string handleStringInput(int index)
+		public string handleStringInputDoubleDelete(int index, bool deleteable = false, bool contributeToValid = true)
 		{
 			float yNow = Window_IdeaGen.guiYOff;
 			Window_IdeaGen.guiXOff += 5;
@@ -377,15 +420,65 @@ namespace Amnabi {
 			{
 				setIndex(index, text3);
 				setString(index, text3);
+			}
+			if(deleteable)
+			{
+				Rect rect6 = new Rect(Window_IdeaGen.guiXOff + 80, Window_IdeaGen.guiYOff, 20, 20);
+				bool flag6 = Widgets.ButtonImage(rect6, AmnabiSocTextures.DeleteX);
+				if (flag6)
+				{
+					popIndex(index);
+					popIndex(index);
+				}
+			}
+			if(text3 != null)
+			{
 				return text3;
 			}
 			else
 			{
-				this.allValid = false;
+				allValid &= !contributeToValid? true : false;
 				return null;
 			}
 		}
+		public string handleStringInput(int index, bool deleteable = false, bool contributeToValid = true)
+		{
+			float yNow = Window_IdeaGen.guiYOff;
+			Window_IdeaGen.guiXOff += 5;
+			Window_IdeaGen.guiYOff += 1;
 
+            Rect rect10 = new Rect(Window_IdeaGen.guiXOff, Window_IdeaGen.guiYOff, 80, 20);
+			
+			Window_IdeaGen.guiYOff += 20;
+			Window_IdeaGen.guiXOff -= 5;
+			Window_IdeaGen.guiYOff += 1;
+			Widgets.DrawRectFast(new Rect(Window_IdeaGen.guiXOff, yNow, 1, Window_IdeaGen.guiYOff - yNow), lastValid? Color.white : Color.red);
+			
+			string text3 = Widgets.TextField(rect10, string.Concat(tryGetObj<object>(index, null)));
+			if(text3 != null)
+			{
+				setIndex(index, text3);
+				setString(index, text3);
+			}
+			if(deleteable)
+			{
+				Rect rect6 = new Rect(Window_IdeaGen.guiXOff + 80, Window_IdeaGen.guiYOff, 20, 20);
+				bool flag6 = Widgets.ButtonImage(rect6, AmnabiSocTextures.DeleteX);
+				if (flag6)
+				{
+					popIndex(index);
+				}
+			}
+			if(text3 != null)
+			{
+				return text3;
+			}
+			else
+			{
+				allValid &= !contributeToValid? true : false;
+				return null;
+			}
+		}
 		public T handleValue<T>(IEnumerable<T> enumer, Func<T, string> label, int index, T defaultValue, bool deleteable = false, bool drawHorizontal = false)
 		{
 			if(defaultValue == null)
@@ -448,6 +541,51 @@ namespace Amnabi {
 
 			return ret;
 		}
+		
+		public Exp_Scope handleScope<T>(int index, bool deleteable = false, bool contributeToValid = true)
+		{
+			return handleScope(index, typeof(T), deleteable, contributeToValid);
+		}
+		public Exp_Scope handleScope(int index, Type t, bool deleteable = false, bool contributeToValid = true)
+		{
+			float yNow = Window_IdeaGen.guiYOff;
+			Window_IdeaGen.guiXOff += 5;
+			Window_IdeaGen.guiYOff += 1;
+			
+            Rect rect10 = new Rect(Window_IdeaGen.guiXOff, Window_IdeaGen.guiYOff, 80, 20);
+            bool flag16 = Widgets.ButtonText(rect10, tryGetString((KeyValuePair<string, Func<SFold, Exp_Idea>> xx) => xx.Key == null? (contributeToValid? "Choose" : "+") : xx.Key, index, default(KeyValuePair<string, Func<SFold, Exp_Idea>>)), true, false, true);
+			if (flag16)
+			{
+				FloatMenuUtility.MakeMenu<KeyValuePair<string, Func<SFold, Exp_Idea>>>(Window_IdeaGen.allScopesTyped[t], (KeyValuePair<string, Func<SFold, Exp_Idea>> xx) => xx.Key, (KeyValuePair<string, Func<SFold, Exp_Idea>> onselect) => delegate()
+				{
+					SFold sFolnw = new SFold();
+					sFolnw.generatorFunc = onselect.Value;
+					setIndex(index, sFolnw);
+					setString(index, onselect.Key);
+				});
+			}
+			if(deleteable)
+			{
+				Rect rect6 = new Rect(Window_IdeaGen.guiXOff + 80, Window_IdeaGen.guiYOff, 20, 20);
+				bool flag6 = Widgets.ButtonImage(rect6, AmnabiSocTextures.DeleteX);
+				if (flag6)
+				{
+					popIndex(index);
+				}
+			}
+			
+			Window_IdeaGen.guiYOff += 20;
+			Exp_Idea res = ((SFold)tryGetObj<SFold>(index, null))?.doFunc();
+			Window_IdeaGen.guiXOff -= 5;
+			Window_IdeaGen.guiYOff += 1;
+			Widgets.DrawRectFast(new Rect(Window_IdeaGen.guiXOff, yNow, 1, Window_IdeaGen.guiYOff - yNow), lastValid? Color.white : Color.red);
+			if(res == null)
+			{
+				allValid &= !contributeToValid? true : false;
+				return null;
+			}
+			return res as Exp_Scope;
+		}
 
 		public Exp_Filter handleFilter(int index, bool deleteable = false, bool contributeToValid = true)
 		{
@@ -488,6 +626,46 @@ namespace Amnabi {
 				return null;
 			}
 			return res as Exp_Filter;
+		}
+		public Exp_Activity handleAction(int index, bool deleteable = false, bool contributeToValid = true)
+		{
+			float yNow = Window_IdeaGen.guiYOff;
+			Window_IdeaGen.guiXOff += 5;
+			Window_IdeaGen.guiYOff += 1;
+			
+            Rect rect10 = new Rect(Window_IdeaGen.guiXOff, Window_IdeaGen.guiYOff, 80, 20);
+            bool flag16 = Widgets.ButtonText(rect10, tryGetString((KeyValuePair<string, Func<SFold, Exp_Idea>> xx) => xx.Key == null? (contributeToValid? "Choose" : "+") : xx.Key, index, default(KeyValuePair<string, Func<SFold, Exp_Idea>>)), true, false, true);
+			if (flag16)
+			{
+				FloatMenuUtility.MakeMenu<KeyValuePair<string, Func<SFold, Exp_Idea>>>(Window_IdeaGen.allActions, (KeyValuePair<string, Func<SFold, Exp_Idea>> xx) => xx.Key, (KeyValuePair<string, Func<SFold, Exp_Idea>> onselect) => delegate()
+				{
+					SFold sFolnw = new SFold();
+					sFolnw.generatorFunc = onselect.Value;
+					setIndex(index, sFolnw);
+					setString(index, onselect.Key);
+				});
+			}
+			if(deleteable)
+			{
+				Rect rect6 = new Rect(Window_IdeaGen.guiXOff + 80, Window_IdeaGen.guiYOff, 20, 20);
+				bool flag6 = Widgets.ButtonImage(rect6, AmnabiSocTextures.DeleteX);
+				if (flag6)
+				{
+					popIndex(index);
+				}
+			}
+			
+			Window_IdeaGen.guiYOff += 20;
+			Exp_Idea res = ((SFold)tryGetObj<SFold>(index, null))?.doFunc();
+			Window_IdeaGen.guiXOff -= 5;
+			Window_IdeaGen.guiYOff += 1;
+			Widgets.DrawRectFast(new Rect(Window_IdeaGen.guiXOff, yNow, 1, Window_IdeaGen.guiYOff - yNow), lastValid? Color.white : Color.red);
+			if(res == null)
+			{
+				allValid &= !contributeToValid? true : false;
+				return null;
+			}
+			return res as Exp_Activity;
 		}
 		public Exp_Variable handleVariables<T>(int index, bool deleteable = false, bool contributeToValid = true)
 		{

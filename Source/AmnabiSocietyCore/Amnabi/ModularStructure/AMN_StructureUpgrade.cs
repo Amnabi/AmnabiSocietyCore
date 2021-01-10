@@ -7,7 +7,7 @@ using Verse;
 
 namespace Amnabi {
     
-    public enum AMN_StructureUpgradeEnum
+    /**public enum AMN_StructureUpgradeEnum
 	{
 		None,
 		WoodFlooring,
@@ -22,47 +22,51 @@ namespace Amnabi {
 
 		AddGenericBills,
 		TurnIntoJail
-	}
+	}**/
 
 	public class AMN_StructureUpgrade
 	{
-		public static Dictionary<AMN_StructureUpgradeEnum, AMN_StructureUpgrade> upgradeWorkerMap = new Dictionary<AMN_StructureUpgradeEnum, AMN_StructureUpgrade>();
+		public static Dictionary<string, AMN_StructureUpgrade> upgradeWorkerMap = new Dictionary<string, AMN_StructureUpgrade>();
 		static AMN_StructureUpgrade()
 		{
-			new Nep_SU_Flooring(AMN_StructureUpgradeEnum.ConcreteFlooring, AmnabiSocDefOfs.Concrete)
-				.attachExclusive(AMN_StructureUpgradeEnum.WoodFlooring)
+			new Nep_SU_Flooring("ConcreteFlooring", AmnabiSocDefOfs.Concrete)
+				.attachExclusive("WoodFlooring")
 				.setProbability(4.0f);
-
-			new Nep_SU_Flooring(AMN_StructureUpgradeEnum.WoodFlooring, AmnabiSocDefOfs.WoodPlankFloor)
-				.attachExclusive(AMN_StructureUpgradeEnum.ConcreteFlooring)
+			new Nep_SU_Flooring("WoodFlooring", AmnabiSocDefOfs.WoodPlankFloor)
+				.attachExclusive("ConcreteFlooring")
 				.setProbability(4.0f);
-			new Nep_SU_SecureOwnership(AMN_StructureUpgradeEnum.SecureOwnership)
+			new Nep_SU_SecureOwnership("SecureOwnership")
 				.setProbability(4.0f);
-			new Nep_SU_TurnIntoPrison(AMN_StructureUpgradeEnum.TurnIntoJail)
+			new Nep_SU_TurnIntoPrison("TurnIntoJail")
 				.setProbability(120.0f);
-			new Nep_SU_GenericBill(AMN_StructureUpgradeEnum.AddGenericBills)
+			new Nep_SU_GenericBill("AddGenericBills")
 				.setProbability(120.0f);
-			new Nep_SU_ClearRoom(AMN_StructureUpgradeEnum.ClearStuffInRoom)
+			new Nep_SU_ClearRoom("ClearStuffInRoom")
 				.setProbability(0.0f);//special case
 		}
 
 		public static IntVec3 opt1;
-		public AMN_StructureUpgradeEnum correspondingEnum;
-		public List<AMN_StructureUpgradeEnum> obsoletify = new List<AMN_StructureUpgradeEnum>();
-		public List<AMN_StructureUpgradeEnum> mutuallyExclusive = new List<AMN_StructureUpgradeEnum>();
+		public string correspondingEnum;
+		public HashSet<string> obsoletify = new HashSet<string>();
+		public HashSet<string> mutuallyExclusive = new HashSet<string>();
 		public float probabilityBase = 1.0f;
+		public List<ThingDef> thingsToBuild = new List<ThingDef>();
+		public AMN_StructureUpgrade attach(ThingDef tas)
+		{
+			thingsToBuild.Add(tas);
+			return this;
+		}
 		public virtual float probability(Map map, Comp_SettlementTicker cst, Ownership upgradBuildingsFor, Actor actor, Ownership usingTheseResource)
 		{
 			return 1.0f;
 		}
 
-
-		public AMN_StructureUpgrade attachExclusive(AMN_StructureUpgradeEnum a)
+		public AMN_StructureUpgrade attachExclusive(string a)
 		{
 			mutuallyExclusive.Add(a);
 			return this;
 		}
-		public AMN_StructureUpgrade attachObsolete(AMN_StructureUpgradeEnum a)
+		public AMN_StructureUpgrade attachObsolete(string a)
 		{
 			obsoletify.Add(a);
 			return this;
@@ -73,7 +77,7 @@ namespace Amnabi {
 			return this;
 		}
 
-		public AMN_StructureUpgrade(AMN_StructureUpgradeEnum corEnum)
+		public AMN_StructureUpgrade(string corEnum)
 		{
 			correspondingEnum = corEnum;
 			upgradeWorkerMap.Add(corEnum, this);
@@ -89,22 +93,28 @@ namespace Amnabi {
 				Log.Error("No enum was removed " + correspondingEnum.ToString());
 			}
 			neps.completedUpgrades.Add(correspondingEnum);
-			foreach(AMN_StructureUpgradeEnum kishin in obsoletify)
+			foreach(string kishin in obsoletify)
 			{
 				while(neps.potentialUpgrades.Remove(kishin)){}
-				//while(neps.completedUpgrades.Remove(kishin)){}
 			}
-			foreach(AMN_StructureUpgradeEnum kishin in mutuallyExclusive)
+			foreach(string kishin in mutuallyExclusive)
 			{
 				while(neps.potentialUpgrades.Remove(kishin)){}
-				//while(neps.completedUpgrades.Remove(kishin)){}
+			}
+			if(!thingsToBuild.NullOrEmpty())
+			{
+				for(int i = 0; i < thingsToBuild.Count; i++)
+				{
+					CellExpander.reuseMe.Add(new ThingAndStuff(thingsToBuild[i], QQ.tryGetCheapStuff(map, thingsToBuild[i], actor, resourceOwwner)));
+				}
+				CellExpander.IterativeFit(map, actor.effectiveFaction(), neps.vectorAA, neps.vectorBB, CellExpander.reuseMe);
 			}
 		}
 
 	}
 	public class Nep_SU_GenericBill : AMN_StructureUpgrade
 	{
-		public Nep_SU_GenericBill(AMN_StructureUpgradeEnum corEnum) : base(corEnum){ }
+		public Nep_SU_GenericBill(string corEnum) : base(corEnum){ }
 
 		public override void applyUpgrade(Comp_SettlementTicker cs, Map map, AMN_Structure neps, Actor actor, Ownership resourceOwwner)
 		{
@@ -149,7 +159,7 @@ namespace Amnabi {
 
 	public class Nep_SU_ClearRoom : AMN_StructureUpgrade
 	{
-		public Nep_SU_ClearRoom(AMN_StructureUpgradeEnum corEnum) : base(corEnum){ }
+		public Nep_SU_ClearRoom(string corEnum) : base(corEnum){ }
 
 		public override void applyUpgrade(Comp_SettlementTicker cs, Map map, AMN_Structure neps, Actor actor, Ownership resourceOwwner)
 		{
@@ -171,7 +181,7 @@ namespace Amnabi {
 	}
 	public class Nep_SU_SecureOwnership : AMN_StructureUpgrade
 	{
-		public Nep_SU_SecureOwnership(AMN_StructureUpgradeEnum corEnum) : base(corEnum){ }
+		public Nep_SU_SecureOwnership(string corEnum) : base(corEnum){ }
 
 		public override void applyUpgrade(Comp_SettlementTicker cs, Map map, AMN_Structure neps, Actor actor, Ownership resourceOwwner)
 		{
@@ -231,7 +241,7 @@ namespace Amnabi {
 	
 	public class Nep_SU_TurnIntoPrison : AMN_StructureUpgrade
 	{
-		public Nep_SU_TurnIntoPrison(AMN_StructureUpgradeEnum corEnum) : base(corEnum){ }
+		public Nep_SU_TurnIntoPrison(string corEnum) : base(corEnum){ }
 
 		public override void applyUpgrade(Comp_SettlementTicker cs, Map map, AMN_Structure neps, Actor actor, Ownership resourceOwwner)
 		{
@@ -259,7 +269,7 @@ namespace Amnabi {
 	public class Nep_SU_Flooring : AMN_StructureUpgrade
 	{
 		public TerrainDef floorDef;
-		public Nep_SU_Flooring(AMN_StructureUpgradeEnum corEnum, TerrainDef floor) : base(corEnum){ floorDef = floor; }
+		public Nep_SU_Flooring(string corEnum, TerrainDef floor) : base(corEnum){ floorDef = floor; }
 		
 		public override float probability(Map map, Comp_SettlementTicker cst, Ownership upgradBuildingsFor, Actor actor, Ownership usingTheseResource)
 		{

@@ -45,10 +45,10 @@ namespace Amnabi {
 			{
 				if(nstruct.potentialUpgrades.Count > 0 && nstruct.FinishedBuilding())
 				{
-					List<AMN_StructureUpgradeEnum> neno = nstruct.potentialUpgrades.FindAll(x => AMN_StructureUpgrade.upgradeWorkerMap[x].canUpgrade(cst, map, nstruct, actor, usingTheseResource));
+					List<string> neno = nstruct.potentialUpgrades.FindAll(x => AMN_StructureUpgrade.upgradeWorkerMap[x].canUpgrade(cst, map, nstruct, actor, usingTheseResource));
 					if(!neno.NullOrEmpty())
 					{
-						AMN_StructureUpgradeEnum choosen = neno.OrderByDescending(x => AMN_StructureUpgrade.upgradeWorkerMap[x].probability(map, cst, upgradBuildingsFor, actor, usingTheseResource) * AMN_StructureUpgrade.upgradeWorkerMap[x].probabilityBase).First();
+						string choosen = neno.OrderByDescending(x => AMN_StructureUpgrade.upgradeWorkerMap[x].probability(map, cst, upgradBuildingsFor, actor, usingTheseResource) * AMN_StructureUpgrade.upgradeWorkerMap[x].probabilityBase).First();
 						AMN_StructureUpgrade.upgradeWorkerMap[choosen].applyUpgrade(cst, map, nstruct, actor, usingTheseResource);
 						nstruct.FinishedBuilding_UpdateCache(map);
 						return true;
@@ -112,8 +112,8 @@ namespace Amnabi {
 			Scribe_Values.Look<IntVec3>(ref this.vectorAA, "CS_NS_A", default(IntVec3), false);
 			Scribe_Values.Look<IntVec3>(ref this.vectorBB, "CS_NS_B", default(IntVec3), false);
             //Scribe_Collections.Look<IntVec3>(ref this.vectorDoors, "CS_NS_VD", LookMode.Value);
-            Scribe_Collections.Look<AMN_StructureUpgradeEnum>(ref this.potentialUpgrades, "CS_NS_LSUEP", LookMode.Value);
-            Scribe_Collections.Look<AMN_StructureUpgradeEnum>(ref this.completedUpgrades, "CS_NS_LSUEC", LookMode.Value);
+            Scribe_Collections.Look<string>(ref this.potentialUpgrades, "CS_NS_LSUEP", LookMode.Value);
+            Scribe_Collections.Look<string>(ref this.completedUpgrades, "CS_NS_LSUEC", LookMode.Value);
 
 		}
 		
@@ -243,8 +243,8 @@ namespace Amnabi {
 		public IntVec3 vectorAA;
 		public IntVec3 vectorBB;
 		//public List<IntVec3> vectorDoors = new List<IntVec3>();
-		public List<AMN_StructureUpgradeEnum> potentialUpgrades = new List<AMN_StructureUpgradeEnum>();
-		public List<AMN_StructureUpgradeEnum> completedUpgrades = new List<AMN_StructureUpgradeEnum>();
+		public List<string> potentialUpgrades = new List<string>();
+		public List<string> completedUpgrades = new List<string>();
 		public bool isFinishedCache = false;
 		public string refid;
 

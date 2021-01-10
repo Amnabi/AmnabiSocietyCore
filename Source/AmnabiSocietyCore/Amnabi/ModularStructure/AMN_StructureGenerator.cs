@@ -25,7 +25,7 @@ namespace Amnabi {
 		public StructureType structureType;
 		public List<ThingDef> thingsToBuild = new List<ThingDef>();
 		public List<ThingDef> thingsToBuildOptional = new List<ThingDef>();//will build if skilled colonist exist
-		public List<AMN_StructureUpgradeEnum> upgradePotential = new List<AMN_StructureUpgradeEnum>();
+		public List<string> upgradePotential = new List<string>();
 
 		public static Dictionary<string, AMN_StructureGenerator> allGenerators = new Dictionary<string, AMN_StructureGenerator>();
 		public AMN_StructureGenerator attach(ThingDef tas)
@@ -38,7 +38,7 @@ namespace Amnabi {
 			thingsToBuildOptional.Add(tas);
 			return this;
 		}
-		public AMN_StructureGenerator attach(AMN_StructureUpgradeEnum tas)
+		public AMN_StructureGenerator attach(string tas)
 		{
 			upgradePotential.Add(tas);
 			return this;
@@ -65,9 +65,9 @@ namespace Amnabi {
 			.attach(ThingDefOf.Bed)
 			.attach(AmnabiSocDefOfs.EndTable)
 			.attach(AmnabiSocDefOfs.Dresser)
-			.attach(AMN_StructureUpgradeEnum.ConcreteFlooring)
-			.attach(AMN_StructureUpgradeEnum.WoodFlooring)
-			.attach(AMN_StructureUpgradeEnum.SecureOwnership)
+			.attach("ConcreteFlooring")
+			.attach("WoodFlooring")
+			.attach("SecureOwnership")
 			);
 			allGenerators.Add("Prison", new AMN_StructureGenerator_Prison{ 
 				requiredDimW = 9, 
@@ -85,9 +85,9 @@ namespace Amnabi {
 			.attach(ThingDefOf.Bed)
 			.attach(ThingDefOf.Bed)
 			.attach(ThingDefOf.Bed)
-			.attach(AMN_StructureUpgradeEnum.ConcreteFlooring)
-			.attach(AMN_StructureUpgradeEnum.WoodFlooring)
-			.attach(AMN_StructureUpgradeEnum.TurnIntoJail)
+			.attach("ConcreteFlooring")
+			.attach("WoodFlooring")
+			.attach("TurnIntoJail")
 			);
 			allGenerators.Add("ResearchRoom", new AMN_StructureGenerator_ResearchRoom {
 				requiredDimW = 7,
@@ -100,8 +100,8 @@ namespace Amnabi {
 			}
 			.attach(AmnabiSocDefOfs.SimpleResearchBench)
 			.attach(AmnabiSocDefOfs.SimpleResearchBench)
-			.attach(AMN_StructureUpgradeEnum.ConcreteFlooring)
-			.attach(AMN_StructureUpgradeEnum.WoodFlooring));
+			.attach("ConcreteFlooring")
+			.attach("WoodFlooring"));
 			allGenerators.Add("SculptingRoom", new AMN_StructureGenerator_ScultingRoom {
 				requiredDimW = 7,
 				requiredDimH = 7,
@@ -115,9 +115,9 @@ namespace Amnabi {
 			.attach(AmnabiSocDefOfs.TableStonecutter)
 			.attachOptional(AmnabiSocDefOfs.ToolCabinet)
 			.attachOptional(AmnabiSocDefOfs.ToolCabinet)
-			.attach(AMN_StructureUpgradeEnum.ConcreteFlooring)
-			.attach(AMN_StructureUpgradeEnum.AddGenericBills)
-			.attach(AMN_StructureUpgradeEnum.WoodFlooring));
+			.attach("ConcreteFlooring")
+			.attach("AddGenericBills")
+			.attach("WoodFlooring"));
 			allGenerators.Add("DiningRoom", new AMN_StructureGenerator_DiningRoom{ 
 				requiredDimW = 7, 
 				requiredDimH = 7,
@@ -127,8 +127,8 @@ namespace Amnabi {
 				structureType = StructureType.DiningRoom,
 				requiredExpander = CellExpander.Expander_Build
 			}
-			.attach(AMN_StructureUpgradeEnum.ConcreteFlooring)
-			.attach(AMN_StructureUpgradeEnum.WoodFlooring));
+			.attach("ConcreteFlooring")
+			.attach("WoodFlooring"));
 			allGenerators.Add("Kitchen", new AMN_StructureGenerator_Kitchen{ 
 				requiredDimW = 5, 
 				requiredDimH = 5,
@@ -139,9 +139,9 @@ namespace Amnabi {
 				requiredExpander = CellExpander.Expander_Build
 			}
 			.attach(AmnabiSocDefOfs.TableButcher)
-			.attach(AMN_StructureUpgradeEnum.ConcreteFlooring)
-			.attach(AMN_StructureUpgradeEnum.AddGenericBills)
-			.attach(AMN_StructureUpgradeEnum.WoodFlooring));
+			.attach("ConcreteFlooring")
+			.attach("AddGenericBills")
+			.attach("WoodFlooring"));
 			allGenerators.Add("Storage", new AMN_StructureGenerator_Storage{ 
 				requiredDimW = 9, 
 				requiredDimH = 9, 
@@ -151,8 +151,8 @@ namespace Amnabi {
 				structureType = StructureType.Storage,
 				requiredExpander = CellExpander.Expander_Build
 			}
-			.attach(AMN_StructureUpgradeEnum.ConcreteFlooring)
-			.attach(AMN_StructureUpgradeEnum.WoodFlooring));
+			.attach("ConcreteFlooring")
+			.attach("WoodFlooring"));
 			allGenerators.Add("GrowZone", new AMN_StructureGenerator_GrowZoneFood{ 
 				requiredDimW = 8, 
 				requiredDimH = 7, 

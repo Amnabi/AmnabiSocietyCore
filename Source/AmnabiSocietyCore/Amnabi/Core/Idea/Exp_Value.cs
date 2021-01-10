@@ -8,151 +8,13 @@ using RimWorld;
 using Verse;
 
 namespace Amnabi {
-    public class Exp_Variable : Exp_Idea {
+    public abstract class Exp_Variable : Exp_Idea {
         public override string GetLabel() 
         {
             return "Error";
         }
     }
-    public class Exp_V_Vector3 : Exp_Variable {
-        public override string GenerateSLID() 
-        {
-            return ID(valueX, valueY, valueZ);
-        }
-        public static string ID(Exp_Idea x, Exp_Idea y, Exp_Idea z) 
-        {
-            return "VECTOR3" + LS_LoadID(x) + LS_LoadID(y) + LS_LoadID(z);
-        }
 
-        public static Exp_Idea generatorFunc(SFold parent)
-        {
-            Exp_Idea xInput = parent.handleVariables<double>(0);
-            Exp_Idea yInput = parent.handleVariables<double>(1);
-            Exp_Idea zInput = parent.handleVariables<double>(2);
-            return parent.allValid? Of(xInput, yInput, zInput) : null;
-        }
-        
-        public static Exp_Idea Of(Exp_Idea x, Exp_Idea y, Exp_Idea z)
-        {
-            string str = ID(x, y, z);
-            if(!filtGen().ContainsKey(str))
-            {
-                Exp_V_Vector3 in_ = new Exp_V_Vector3();
-                in_.valueX = x;
-                in_.valueY = y;
-                in_.valueZ = z;
-                filtGen().Add(str, in_.initialize());
-            }
-            return filtGen()[str] as Exp_Idea;
-        }
-        
-        public override object output(Dictionary<string, object> bParam, int stackDepth, HashSet<string> occupieddefinetags) 
-        {
-            return new Vector3(
-                (float)(double)valueX.output(bParam, stackDepth + 1, occupieddefinetags),
-                (float)(double)valueY.output(bParam, stackDepth + 1, occupieddefinetags),
-                (float)(double)valueZ.output(bParam, stackDepth + 1, occupieddefinetags)
-            );
-        }
-
-        public Exp_Idea valueX;
-        public Exp_Idea valueY;
-        public Exp_Idea valueZ;
-
-        public Exp_V_Vector3() : base()
-        {
-            //Textures should be manually assigned
-        }
-
-        public override void GetDescriptionDeep(int stackDepth) 
-        {
-            stringBuilderInstanceAppend("X");
-            LS_Desc(stackDepth, valueX);
-            stringBuilderInstanceAppend("Y");
-            LS_Desc(stackDepth, valueY);
-            stringBuilderInstanceAppend("Z");
-            LS_Desc(stackDepth, valueZ);
-            return;
-        }
-		public override void ExposeData()
-		{
-            base.ExposeData();
-            Scribe_References.Look<Exp_Idea>(ref valueX, "_valueX");
-            Scribe_References.Look<Exp_Idea>(ref valueY, "_valueY");
-            Scribe_References.Look<Exp_Idea>(ref valueZ, "_valueZ");
-            if(Scribe.mode == LoadSaveMode.ResolvingCrossRefs)
-            {
-                INCREF(valueX);
-                INCREF(valueY);
-                INCREF(valueZ);
-            }
-        }
-    }
-
-    
-    /**public class Exp_V_RandomCircularVector3 : Exp_Variable {
-        public override string GenerateSLID() 
-        {
-            return ID(value);
-        }
-        public static string ID(double value) 
-        {
-            return "RANDOMCIRCULARVECTOR3" + LS_LoadID(value);
-        }
-
-        public static Exp_Idea generatorFunc(SFold parent)
-        {
-            double rInput = parent.handleDoubleInput(0);
-            return parent.allValid? Of(rInput) : null;
-        }
-        
-        public static Exp_Idea Of(double r)
-        {
-            string str = ID(r);
-            if(!filtGen().ContainsKey(str))
-            {
-                Exp_V_RandomCircularVector3 in_ = new Exp_V_RandomCircularVector3();
-                in_.value = r;
-                filtGen().Add(str, in_.initialize());
-            }
-            return filtGen()[str] as Exp_Idea;
-        }
-        
-        public override object output(Dictionary<string, object> bParam, int stackDepth, HashSet<string> occupieddefinetags) 
-        {
-            return new Vector3(
-                (float)(double)valueX.output(bParam, stackDepth + 1, occupieddefinetags),
-                (float)(double)valueY.output(bParam, stackDepth + 1, occupieddefinetags),
-                (float)(double)valueZ.output(bParam, stackDepth + 1, occupieddefinetags)
-            );
-        }
-
-        public double value;
-
-        public Exp_V_RandomCircularVector3() : base()
-        {
-            //Textures should be manually assigned
-        }
-
-        public override void GetDescriptionDeep(int stackDepth) 
-        {
-            return "X" + LS_Desc(stackDepth, valueX);
-        }
-		public override void ExposeData()
-		{
-            base.ExposeData();
-            Scribe_References.Look<Exp_Idea>(ref valueX, "_valueX");
-            Scribe_References.Look<Exp_Idea>(ref valueY, "_valueY");
-            Scribe_References.Look<Exp_Idea>(ref valueZ, "_valueZ");
-            if(Scribe.mode == LoadSaveMode.ResolvingCrossRefs)
-            {
-                INCREF(valueX);
-                INCREF(valueY);
-                INCREF(valueZ);
-            }
-        }
-    }**/
-    
     public class Exp_V_Random : Exp_Variable {
         public override string GenerateSLID() 
         {
@@ -193,6 +55,61 @@ namespace Amnabi {
 		public override void ExposeData()
 		{
             base.ExposeData();
+        }
+    }
+    
+    public class Exp_V_String : Exp_Variable {
+        public override string GetLabel() 
+        {
+            return valueString;
+        }
+        public override string GenerateSLID() 
+        {
+            return ID(valueString);
+        }
+        public static string ID(string str) 
+        {
+            return "STRING" +  LS_LoadID(str);
+        }
+
+        public static Exp_Idea generatorFunc(SFold parent)
+        {
+            string str = parent.handleStringInput(0);
+            return parent.allValid? Of(str) : null;
+        }
+        
+        public static Exp_Idea Of(string strI)
+        {
+            string str = ID(strI);
+            if(!postGen().ContainsKey(str))
+            {
+                Exp_V_String in_ = new Exp_V_String();
+                in_.valueString = strI;
+                postGen().Add(str, in_.initialize());
+            }
+            return postGen()[str];
+        }
+        
+        public override object output(Dictionary<string, object> bParam, int stackDepth, HashSet<string> occupieddefinetags)  
+        {
+            return valueString;
+        }
+
+        public string valueString = "StringName";
+
+        public Exp_V_String() : base()
+        {
+            //Textures should be manually assigned
+        }
+
+        public override void GetDescriptionDeep(int stackDepth) 
+        {
+            stringBuilderInstanceAppend(valueString);
+        }
+		public override void ExposeData()
+		{
+            base.ExposeData();
+			Scribe_Values.Look<string>(ref this.valueString, "valueString", "", false);
         }
     }
 
@@ -328,9 +245,11 @@ namespace Amnabi {
             return filtGen()[str];
         }
         public ThingDef raceDef;
-        public Exp_V_RaceDef() { 
-            texturePath = "UI/IdeaIcons/Modesty";
+        public override string texturePath()
+        {
+            return "UI/IdeaIcons/Modesty";
         }
+        public Exp_V_RaceDef() { }
 
 		public override void ExposeData()
 		{
@@ -484,6 +403,385 @@ namespace Amnabi {
 		public override void ExposeData()
 		{
             base.ExposeData();
+        }
+    }
+    
+    public class Exp_V_DivideDouble : Exp_Variable {
+        public override string GenerateSLID() 
+        {
+            return ID(subVariableA, subVariableB);
+        }
+        public static string ID(Exp_Idea sA, Exp_Idea sB) 
+        {
+            return "DIVIDEDOUBLE" + LS_LoadID(sA) + LS_LoadID(sB);
+        }
+        public static Exp_Idea generatorFunc(SFold parent)
+        {
+            Exp_Variable param_0 = parent.handleVariables<double>(0, true, true);
+            Exp_Variable param_1 = parent.handleVariables<double>(1, true, true);
+            return parent.allValid? Of(param_0, param_1) : null;
+        }
+        public static Exp_Idea Of(Exp_Idea io, Exp_Idea io2)
+        {
+            string str = ID(io, io2);
+            if(!filtGen().ContainsKey(str))
+            {
+                Exp_V_DivideDouble in_ = new Exp_V_DivideDouble();
+                in_.subVariableA = io;
+                in_.subVariableB = io2;
+                filtGen().Add(str, in_.initialize());
+            }
+            return filtGen()[str] as Exp_Idea;
+        }
+        
+        public override object output(Dictionary<string, object> bParam, int stackDepth, HashSet<string> occupieddefinetags) 
+        {
+            return (double)subVariableA.output(bParam, stackDepth + 1, occupieddefinetags) / (double)subVariableB.output(bParam, stackDepth + 1, occupieddefinetags);
+        }
+
+        public Exp_Idea subVariableA;
+        public Exp_Idea subVariableB;
+
+        public Exp_V_DivideDouble() : base(){}
+
+        public override void GetDescriptionDeep(int stackDepth) 
+        {
+            pushColor(selfConditionColor());
+            stringBuilderInstanceAppend("Divide" + bracketOpen(stackDepth + 1));
+            LS_Desc(stackDepth + 1, subVariableA, subVariableB);
+            stringBuilderInstanceAppend(bracketEnd(stackDepth + 1));
+            popColor();
+        }
+		public override void ExposeData()
+		{
+            base.ExposeData();
+            Scribe_References.Look<Exp_Idea>(ref subVariableA, "subVariableA");
+            Scribe_References.Look<Exp_Idea>(ref subVariableB, "subVariableB");
+            if(Scribe.mode == LoadSaveMode.ResolvingCrossRefs)
+            {
+                INCREF(subVariableA);
+                INCREF(subVariableB);
+            }
+        }
+    }
+    public class Exp_V_PowDouble : Exp_Variable {
+        public override string GenerateSLID() 
+        {
+            return ID(subVariableA, subVariableB);
+        }
+        public static string ID(Exp_Idea sA, Exp_Idea sB) 
+        {
+            return "POWDOUBLE" + LS_LoadID(sA) + LS_LoadID(sB);
+        }
+        public static Exp_Idea generatorFunc(SFold parent)
+        {
+            Exp_Variable param_0 = parent.handleVariables<double>(0, true, true);
+            Exp_Variable param_1 = parent.handleVariables<double>(1, true, true);
+            return parent.allValid? Of(param_0, param_1) : null;
+        }
+        public static Exp_Idea Of(Exp_Idea io, Exp_Idea io2)
+        {
+            string str = ID(io, io2);
+            if(!filtGen().ContainsKey(str))
+            {
+                Exp_V_DivideDouble in_ = new Exp_V_DivideDouble();
+                in_.subVariableA = io;
+                in_.subVariableB = io2;
+                filtGen().Add(str, in_.initialize());
+            }
+            return filtGen()[str] as Exp_Idea;
+        }
+        
+        public override object output(Dictionary<string, object> bParam, int stackDepth, HashSet<string> occupieddefinetags) 
+        {
+            return Math.Pow((double)subVariableA.output(bParam, stackDepth + 1, occupieddefinetags), (double)subVariableB.output(bParam, stackDepth + 1, occupieddefinetags));
+        }
+
+        public Exp_Idea subVariableA;
+        public Exp_Idea subVariableB;
+
+        public Exp_V_PowDouble() : base(){}
+
+        public override void GetDescriptionDeep(int stackDepth) 
+        {
+            pushColor(selfConditionColor());
+            stringBuilderInstanceAppend("Pow" + bracketOpen(stackDepth + 1));
+            LS_Desc(stackDepth + 1, subVariableA, subVariableB);
+            stringBuilderInstanceAppend(bracketEnd(stackDepth + 1));
+            popColor();
+        }
+		public override void ExposeData()
+		{
+            base.ExposeData();
+            Scribe_References.Look<Exp_Idea>(ref subVariableA, "subVariableA");
+            Scribe_References.Look<Exp_Idea>(ref subVariableB, "subVariableB");
+            if(Scribe.mode == LoadSaveMode.ResolvingCrossRefs)
+            {
+                INCREF(subVariableA);
+                INCREF(subVariableB);
+            }
+        }
+    }
+
+    public class Exp_V_SubDouble : Exp_Variable {
+        public override string GenerateSLID() 
+        {
+            return ID(subVariableA, subVariableB);
+        }
+        public static string ID(Exp_Idea sA, Exp_Idea sB) 
+        {
+            return "SUBDOUBLE" + LS_LoadID(sA) + LS_LoadID(sB);
+        }
+
+        public static Exp_Idea generatorFunc(SFold parent)
+        {
+            Exp_Variable param_0 = parent.handleVariables<double>(0, true, true);
+            Exp_Variable param_1 = parent.handleVariables<double>(1, true, true);
+            return parent.allValid? Of(param_0, param_1) : null;
+        }
+        public static Exp_Idea Of(Exp_Idea io, Exp_Idea io2)
+        {
+            string str = ID(io, io2);
+            if(!filtGen().ContainsKey(str))
+            {
+                Exp_V_SubDouble in_ = new Exp_V_SubDouble();
+                in_.subVariableA = io;
+                in_.subVariableB = io2;
+                filtGen().Add(str, in_.initialize());
+            }
+            return filtGen()[str] as Exp_Idea;
+        }
+        
+        public override object output(Dictionary<string, object> bParam, int stackDepth, HashSet<string> occupieddefinetags) 
+        {
+            return (double)subVariableA.output(bParam, stackDepth + 1, occupieddefinetags) - (double)subVariableB.output(bParam, stackDepth + 1, occupieddefinetags);
+        }
+
+        public Exp_Idea subVariableA;
+        public Exp_Idea subVariableB;
+
+        public Exp_V_SubDouble() : base(){}
+
+        public override void GetDescriptionDeep(int stackDepth) 
+        {
+            pushColor(selfConditionColor());
+            stringBuilderInstanceAppend("Subtract" + bracketOpen(stackDepth + 1));
+            LS_Desc(stackDepth + 1, subVariableA, subVariableB);
+            stringBuilderInstanceAppend(bracketEnd(stackDepth + 1));
+            popColor();
+        }
+		public override void ExposeData()
+		{
+            base.ExposeData();
+            Scribe_References.Look<Exp_Idea>(ref subVariableA, "subVariableA");
+            Scribe_References.Look<Exp_Idea>(ref subVariableB, "subVariableB");
+            if(Scribe.mode == LoadSaveMode.ResolvingCrossRefs)
+            {
+                INCREF(subVariableA);
+                INCREF(subVariableB);
+            }
+        }
+    }
+    public class Exp_V_AddDouble : Exp_Variable {
+        public override string GenerateSLID() 
+        {
+            return ID(subVariables);
+        }
+        public static string ID(IEnumerable<Exp_Idea> io) 
+        {
+            return "ADDDOUBLE" + LS_LoadID(io);
+        }
+
+        public static Exp_Idea generatorFunc(SFold parent)
+        {
+            List<Exp_Idea> stream = new List<Exp_Idea>();
+            for(int i = 0; i < parent.Count; i++)
+            {
+                stream.Add(parent.handleVariables<double>(i, true, true));
+            }
+            parent.handleVariables<double>(parent.Count, false, false);
+            return parent.allValid? Of(stream) : null;
+        }
+        
+        public static Exp_Idea Of(Exp_Idea io)
+        {
+            return Of(new List<Exp_Idea>{ io });
+        }
+        public static Exp_Idea Of(Exp_Idea io, Exp_Idea io2)
+        {
+            return Of(new List<Exp_Idea>{ io, io2 });
+        }
+        public static Exp_Idea Of(Exp_Idea io, Exp_Idea io2, Exp_Idea io3)
+        {
+            return Of(new List<Exp_Idea>{ io, io2, io3 });
+        }
+        public static Exp_Idea Of(Exp_Idea io, Exp_Idea io2, Exp_Idea io3, Exp_Idea io4)
+        {
+            return Of(new List<Exp_Idea>{ io, io2, io3, io4});
+        }
+        public static Exp_Idea Of(Exp_Idea io, Exp_Idea io2, Exp_Idea io3, Exp_Idea io4, Exp_Idea io5)
+        {
+            return Of(new List<Exp_Idea>{ io, io2, io3, io4, io5 });
+        }
+        public static Exp_Idea Of(IEnumerable<Exp_Idea> io)
+        {
+            string str = ID(io);
+            if(!filtGen().ContainsKey(str))
+            {
+                Exp_V_AddDouble in_ = new Exp_V_AddDouble();
+                in_.subVariables.AddRange(io);
+                filtGen().Add(str, in_.initialize());
+            }
+            return filtGen()[str] as Exp_Idea;
+        }
+        
+        public override object output(Dictionary<string, object> bParam, int stackDepth, HashSet<string> occupieddefinetags) 
+        {
+            double sum = 0;
+            foreach(Exp_Idea exop in subVariables)
+            {
+                sum += (double)exop.output(bParam, stackDepth + 1, occupieddefinetags);
+            }
+            return sum;
+        }
+
+        public List<Exp_Idea> subVariables = new List<Exp_Idea>();
+
+        public Exp_V_AddDouble() : base(){}
+
+        public override void GetDescriptionDeep(int stackDepth) 
+        {
+            pushColor(selfConditionColor());
+            if(subVariables.Count == 0)
+            {
+                stringBuilderInstanceAppend("No Input");
+                popColor();
+                return;
+            }
+            else if(subVariables.Count == 1)
+            {
+                LS_Desc(stackDepth + 1, subVariables);
+                popColor();
+                return;
+            }
+            else
+            {
+                stringBuilderInstanceAppend("Add" + bracketOpen(stackDepth + 1));
+                LS_Desc(stackDepth + 1, subVariables);
+                stringBuilderInstanceAppend(bracketEnd(stackDepth + 1));
+                popColor();
+                return;
+            }
+        }
+		public override void ExposeData()
+		{
+            base.ExposeData();
+            Scribe_Collections.Look<Exp_Idea>(ref subVariables, "Add", LookMode.Reference);
+            if(Scribe.mode == LoadSaveMode.ResolvingCrossRefs)
+            {
+                INCREF(subVariables);
+            }
+        }
+    }
+    public class Exp_V_MultiplyDouble : Exp_Variable {
+        public override string GenerateSLID() 
+        {
+            return ID(subVariables);
+        }
+        public static string ID(IEnumerable<Exp_Idea> io) 
+        {
+            return "MULTIPLYDOUBLE" + LS_LoadID(io);
+        }
+
+        public static Exp_Idea generatorFunc(SFold parent)
+        {
+            List<Exp_Idea> stream = new List<Exp_Idea>();
+            for(int i = 0; i < parent.Count; i++)
+            {
+                stream.Add(parent.handleVariables<double>(i, true, true));
+            }
+            parent.handleVariables<double>(parent.Count, false, false);
+            return parent.allValid? Of(stream) : null;
+        }
+        
+        public static Exp_Idea Of(Exp_Idea io)
+        {
+            return Of(new List<Exp_Idea>{ io });
+        }
+        public static Exp_Idea Of(Exp_Idea io, Exp_Idea io2)
+        {
+            return Of(new List<Exp_Idea>{ io, io2 });
+        }
+        public static Exp_Idea Of(Exp_Idea io, Exp_Idea io2, Exp_Idea io3)
+        {
+            return Of(new List<Exp_Idea>{ io, io2, io3 });
+        }
+        public static Exp_Idea Of(Exp_Idea io, Exp_Idea io2, Exp_Idea io3, Exp_Idea io4)
+        {
+            return Of(new List<Exp_Idea>{ io, io2, io3, io4});
+        }
+        public static Exp_Idea Of(Exp_Idea io, Exp_Idea io2, Exp_Idea io3, Exp_Idea io4, Exp_Idea io5)
+        {
+            return Of(new List<Exp_Idea>{ io, io2, io3, io4, io5 });
+        }
+        public static Exp_Idea Of(IEnumerable<Exp_Idea> io)
+        {
+            string str = ID(io);
+            if(!filtGen().ContainsKey(str))
+            {
+                Exp_V_MultiplyDouble in_ = new Exp_V_MultiplyDouble();
+                in_.subVariables.AddRange(io);
+                filtGen().Add(str, in_.initialize());
+            }
+            return filtGen()[str] as Exp_Idea;
+        }
+        
+        public override object output(Dictionary<string, object> bParam, int stackDepth, HashSet<string> occupieddefinetags) 
+        {
+            double mult = 1.0d;
+            foreach(Exp_Idea exop in subVariables)
+            {
+                mult *= (double)exop.output(bParam, stackDepth + 1, occupieddefinetags);
+            }
+            return mult;
+        }
+
+        public List<Exp_Idea> subVariables = new List<Exp_Idea>();
+
+        public Exp_V_MultiplyDouble() : base(){}
+
+        public override void GetDescriptionDeep(int stackDepth) 
+        {
+            pushColor(selfConditionColor());
+            if(subVariables.Count == 0)
+            {
+                stringBuilderInstanceAppend("No Input");
+                popColor();
+                return;
+            }
+            else if(subVariables.Count == 1)
+            {
+                LS_Desc(stackDepth + 1, subVariables);
+                popColor();
+                return;
+            }
+            else
+            {
+                stringBuilderInstanceAppend("Multiply" + bracketOpen(stackDepth + 1));
+                LS_Desc(stackDepth + 1, subVariables);
+                stringBuilderInstanceAppend(bracketEnd(stackDepth + 1));
+                popColor();
+                return;
+            }
+        }
+		public override void ExposeData()
+		{
+            base.ExposeData();
+            Scribe_Collections.Look<Exp_Idea>(ref subVariables, "Mult", LookMode.Reference);
+            if(Scribe.mode == LoadSaveMode.ResolvingCrossRefs)
+            {
+                INCREF(subVariables);
+            }
         }
     }
 

@@ -93,6 +93,7 @@ namespace Amnabi
 			ownership.parentComp = this;
 			ownership.parentType = 1;
 			settlementActor = new Actor_Settlement();
+			settlementActor.cstRef = this;
 			personalIdentity = new Exp_PersonalIdentity();
 		}
 
